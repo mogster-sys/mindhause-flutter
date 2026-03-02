@@ -1,0 +1,106 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
+[ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
+
+[sub_resource type="StandardMaterial3D" id="floor_mat"]
+albedo_color = Color(0.5, 0.48, 0.45, 1)
+
+[sub_resource type="StandardMaterial3D" id="wall_mat"]
+albedo_color = Color(0.6, 0.55, 0.5, 1)
+
+[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
+albedo_color = Color(0.55, 0.52, 0.48, 1)
+
+[sub_resource type="StandardMaterial3D" id="bench_mat"]
+albedo_color = Color(0.42, 0.35, 0.25, 1)
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.12, 0.11, 0.1, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.95, 0.9, 0.82, 1)
+ambient_light_energy = 0.35
+
+[node name="Workshop" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(10, 0.2, 10)
+material = SubResource("floor_mat")
+
+[node name="Ceiling" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
+size = Vector3(10, 0.2, 10)
+material = SubResource("ceiling_mat")
+
+[node name="WallNorth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -5.15)
+use_collision = true
+size = Vector3(10, 4, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallSouth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 5.15)
+use_collision = true
+size = Vector3(10, 4, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallEast" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15, 2, 0)
+use_collision = true
+size = Vector3(0.3, 4, 10)
+material = SubResource("wall_mat")
+
+[node name="WallWest" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.15, 2, 0)
+use_collision = true
+size = Vector3(0.3, 4, 10)
+material = SubResource("wall_mat")
+
+[node name="WorkbenchCSG" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, -3.5)
+use_collision = true
+size = Vector3(3, 0.8, 1.0)
+material = SubResource("bench_mat")
+
+[node name="BenchLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5, -3.5)
+light_color = Color(1.0, 0.95, 0.85, 1)
+light_energy = 1.0
+omni_range = 6.0
+
+[node name="OverheadLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 0)
+light_color = Color(0.95, 0.9, 0.82, 1)
+light_energy = 0.7
+omni_range = 12.0
+
+[node name="Workbench" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.85, -3.5)
+surface_id = "workshop_bench"
+surface_type = "desk"
+capacity = 10
+
+[node name="ToolWall" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.0, 0)
+surface_id = "workshop_tools"
+surface_type = "wall"
+capacity = 8
+
+[node name="FloorArea" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.05, 2)
+surface_id = "workshop_floor"
+surface_type = "floor"
+capacity = 6
+
+[node name="DoorToKitchen" parent="." instance=ExtResource("door")]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -4.9, 0, -2)
+destination_room = "kitchen"

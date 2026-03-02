@@ -1,0 +1,110 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
+[ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
+
+[sub_resource type="StandardMaterial3D" id="floor_mat"]
+albedo_color = Color(0.6, 0.45, 0.35, 1)
+
+[sub_resource type="StandardMaterial3D" id="wall_mat"]
+albedo_color = Color(0.82, 0.75, 0.68, 1)
+
+[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
+albedo_color = Color(0.9, 0.87, 0.82, 1)
+
+[sub_resource type="StandardMaterial3D" id="bed_mat"]
+albedo_color = Color(0.35, 0.28, 0.45, 1)
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.15, 0.12, 0.18, 1)
+ambient_light_source = 2
+ambient_light_color = Color(1.0, 0.93, 0.85, 1)
+ambient_light_energy = 0.35
+
+[node name="Bedroom" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
+
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(8, 0.2, 8)
+material = SubResource("floor_mat")
+
+[node name="Ceiling" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
+size = Vector3(8, 0.2, 8)
+material = SubResource("ceiling_mat")
+
+[node name="WallNorth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.15)
+use_collision = true
+size = Vector3(8, 4, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallSouth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4.15)
+use_collision = true
+size = Vector3(8, 4, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallEast" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15, 2, 0)
+use_collision = true
+size = Vector3(0.3, 4, 8)
+material = SubResource("wall_mat")
+
+[node name="WallWest" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2, 0)
+use_collision = true
+size = Vector3(0.3, 4, 8)
+material = SubResource("wall_mat")
+
+[node name="BedCSG" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.3, -2.5)
+size = Vector3(2, 0.6, 2.5)
+material = SubResource("bed_mat")
+
+[node name="BedsideLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -2.5)
+light_color = Color(1.0, 0.88, 0.7, 1)
+light_energy = 0.6
+omni_range = 4.0
+
+[node name="DeskLight" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -2)
+light_color = Color(1.0, 0.92, 0.78, 1)
+light_energy = 0.8
+omni_range = 5.0
+
+[node name="Nightstand" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.6, -2.5)
+surface_id = "bedroom_nightstand"
+surface_type = "desk"
+capacity = 3
+
+[node name="WritingDesk" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.75, -2)
+surface_id = "bedroom_desk"
+surface_type = "desk"
+capacity = 6
+
+[node name="WallShelf" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.2, 3.5)
+surface_id = "bedroom_shelf"
+surface_type = "shelf"
+capacity = 5
+
+[node name="StairsToFoyer" parent="." instance=ExtResource("door")]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 3.9)
+destination_room = "foyer"
+is_stairs = true
+
+[node name="DoorToGymnasium" parent="." instance=ExtResource("door")]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3.9, 0, 0)
+destination_room = "gymnasium"

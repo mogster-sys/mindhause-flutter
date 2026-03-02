@@ -1,0 +1,100 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
+[ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
+
+[sub_resource type="StandardMaterial3D" id="floor_mat"]
+albedo_color = Color(0.35, 0.5, 0.3, 1)
+
+[sub_resource type="StandardMaterial3D" id="wall_mat"]
+albedo_color = Color(0.75, 0.72, 0.65, 1)
+
+[sub_resource type="StandardMaterial3D" id="path_mat"]
+albedo_color = Color(0.7, 0.65, 0.55, 1)
+
+[sub_resource type="StandardMaterial3D" id="stone_mat"]
+albedo_color = Color(0.8, 0.78, 0.72, 1)
+
+[sub_resource type="Environment" id="env"]
+background_mode = 1
+background_color = Color(0.55, 0.7, 0.85, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.95, 0.98, 1.0, 1)
+ambient_light_energy = 0.7
+
+[node name="Garden" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("env")
+
+[node name="SpawnPoint" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+
+[node name="Ground" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
+use_collision = true
+size = Vector3(14, 0.2, 14)
+material = SubResource("floor_mat")
+
+[node name="StonePath" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
+use_collision = true
+size = Vector3(2, 0.06, 12)
+material = SubResource("path_mat")
+
+[node name="WallNorth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7.15)
+use_collision = true
+size = Vector3(14, 3, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallSouth" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7.15)
+use_collision = true
+size = Vector3(14, 3, 0.3)
+material = SubResource("wall_mat")
+
+[node name="WallEast" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15, 1.5, 0)
+use_collision = true
+size = Vector3(0.3, 3, 14)
+material = SubResource("wall_mat")
+
+[node name="WallWest" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15, 1.5, 0)
+use_collision = true
+size = Vector3(0.3, 3, 14)
+material = SubResource("wall_mat")
+
+[node name="FountainBase" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+size = Vector3(2, 0.6, 2)
+material = SubResource("stone_mat")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.85, -0.35, 0.39, 0, 0.74, 0.67, -0.53, -0.57, 0.63, 0, 8, 0)
+light_color = Color(1.0, 0.98, 0.92, 1)
+light_energy = 1.2
+shadow_enabled = true
+
+[node name="StoneBench" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 3)
+surface_id = "garden_bench"
+surface_type = "desk"
+capacity = 4
+
+[node name="PlanterWall" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 1.2, 0)
+surface_id = "garden_planter"
+surface_type = "shelf"
+capacity = 6
+
+[node name="CentralPedestal" parent="." instance=ExtResource("surface")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
+surface_id = "garden_pedestal"
+surface_type = "pedestal"
+capacity = 1
+
+[node name="DoorToLibrary" parent="." instance=ExtResource("door")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.9)
+destination_room = "library"

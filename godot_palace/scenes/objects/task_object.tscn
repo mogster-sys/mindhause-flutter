@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c001taskobj"]
+
+[ext_resource type="Script" path="res://scripts/objects/task_object.gd" id="1_to"]
+
+[node name="TaskObject" type="RigidBody3D" groups=["task_objects"]]
+script = ExtResource("1_to")
+collision_layer = 4
+collision_mask = 1
