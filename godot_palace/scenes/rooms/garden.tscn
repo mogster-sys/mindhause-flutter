@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
@@ -22,6 +22,9 @@ ambient_light_source = 2
 ambient_light_color = Color(0.95, 0.98, 1.0, 1)
 ambient_light_energy = 0.7
 
+
+[sub_resource type="StandardMaterial3D" id="furniture_mat"]
+albedo_color = Color(0.5, 0.38, 0.28, 1)
 [node name="Garden" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
@@ -98,3 +101,28 @@ capacity = 1
 [node name="DoorToLibrary" parent="." instance=ExtResource("door")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -6.9)
 destination_room = "library"
+
+[node name="BenchSeatCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.3, 3)
+size = Vector3(2.0, 0.15, 0.5)
+material = SubResource("furniture_mat")
+
+[node name="BenchLegL" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7, 0.15, 3)
+size = Vector3(0.2, 0.3, 0.5)
+material = SubResource("furniture_mat")
+
+[node name="BenchLegR" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3, 0.15, 3)
+size = Vector3(0.2, 0.3, 0.5)
+material = SubResource("furniture_mat")
+
+[node name="PlanterCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 0)
+size = Vector3(0.8, 1.0, 3.0)
+material = SubResource("furniture_mat")
+
+[node name="FountainWater" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+size = Vector3(1.6, 0.04, 1.6)
+material = SubResource("furniture_mat")

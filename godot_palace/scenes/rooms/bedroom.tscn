@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
@@ -22,6 +22,9 @@ ambient_light_source = 2
 ambient_light_color = Color(1.0, 0.93, 0.85, 1)
 ambient_light_energy = 0.35
 
+
+[sub_resource type="StandardMaterial3D" id="furniture_mat"]
+albedo_color = Color(0.5, 0.38, 0.28, 1)
 [node name="Bedroom" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
@@ -108,3 +111,23 @@ is_stairs = true
 [node name="DoorToGymnasium" parent="." instance=ExtResource("door")]
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3.9, 0, 0)
 destination_room = "gymnasium"
+
+[node name="NightstandCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, -2.5)
+size = Vector3(0.5, 0.5, 0.4)
+material = SubResource("furniture_mat")
+
+[node name="BedroomDeskCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.35, -2)
+size = Vector3(1.5, 0.7, 0.7)
+material = SubResource("furniture_mat")
+
+[node name="BedroomShelfCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15, 3.5)
+size = Vector3(0.15, 0.06, 2.0)
+material = SubResource("furniture_mat")
+
+[node name="DeskChairCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.25, -1.0)
+size = Vector3(0.5, 0.5, 0.5)
+material = SubResource("furniture_mat")

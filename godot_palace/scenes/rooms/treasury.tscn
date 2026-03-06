@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
@@ -23,6 +23,9 @@ ambient_light_source = 2
 ambient_light_color = Color(1.0, 0.9, 0.7, 1)
 ambient_light_energy = 0.25
 
+
+[sub_resource type="StandardMaterial3D" id="furniture_mat"]
+albedo_color = Color(0.5, 0.38, 0.28, 1)
 [node name="Treasury" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
@@ -111,3 +114,28 @@ capacity = 3
 [node name="DoorToGymnasium" parent="." instance=ExtResource("door")]
 transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -2.9, 0, 0)
 destination_room = "gymnasium"
+
+[node name="VaultPedestalCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.45, 0)
+size = Vector3(0.6, 0.9, 0.6)
+material = SubResource("furniture_mat")
+
+[node name="GlassDisplayCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.55, -1.5)
+size = Vector3(0.8, 1.1, 0.5)
+material = SubResource("furniture_mat")
+
+[node name="WallMountCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.95, 0)
+size = Vector3(0.12, 0.06, 1.0)
+material = SubResource("furniture_mat")
+
+[node name="WallBracketL" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.75, -0.35)
+size = Vector3(0.12, 0.4, 0.06)
+material = SubResource("furniture_mat")
+
+[node name="WallBracketR" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.75, 0.35)
+size = Vector3(0.12, 0.4, 0.06)
+material = SubResource("furniture_mat")

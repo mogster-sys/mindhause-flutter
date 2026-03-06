@@ -8,7 +8,7 @@ extends Node3D
 @export var is_stairs: bool = false
 @export var requires_unlock: bool = false
 
-@onready var mesh: MeshInstance3D = $DoorMesh
+@onready var door_panel: Node3D = $DoorPanel
 @onready var trigger_area: Area3D = $TriggerArea
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 
@@ -62,7 +62,7 @@ func _open_door() -> void:
 	else:
 		# Fallback: just rotate
 		var tween := create_tween()
-		tween.tween_property(mesh, "rotation_degrees:y", -90.0, 0.5).set_ease(Tween.EASE_OUT)
+		tween.tween_property(door_panel, "rotation_degrees:y", -90.0, 0.5).set_ease(Tween.EASE_OUT)
 
 
 func _close_door() -> void:
@@ -72,7 +72,7 @@ func _close_door() -> void:
 		animation_player.play("close")
 	else:
 		var tween := create_tween()
-		tween.tween_property(mesh, "rotation_degrees:y", 0.0, 0.4).set_ease(Tween.EASE_IN)
+		tween.tween_property(door_panel, "rotation_degrees:y", 0.0, 0.4).set_ease(Tween.EASE_IN)
 
 
 func _transition_to_room() -> void:

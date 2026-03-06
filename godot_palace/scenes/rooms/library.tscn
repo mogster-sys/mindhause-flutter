@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
@@ -19,6 +19,9 @@ ambient_light_source = 2
 ambient_light_color = Color(1.0, 0.95, 0.85, 1)
 ambient_light_energy = 0.4
 
+
+[sub_resource type="StandardMaterial3D" id="furniture_mat"]
+albedo_color = Color(0.5, 0.38, 0.28, 1)
 [node name="Library" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
@@ -111,3 +114,23 @@ destination_room = "foyer"
 [node name="DoorToGarden" parent="." instance=ExtResource("door")]
 transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 5.9)
 destination_room = "garden"
+
+[node name="ReadingTableCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, 0)
+size = Vector3(2.5, 0.7, 1.2)
+material = SubResource("furniture_mat")
+
+[node name="BookshelfLeftCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 2.5, -3)
+size = Vector3(0.6, 5.0, 2.0)
+material = SubResource("furniture_mat")
+
+[node name="BookshelfRightCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 2.5, -3)
+size = Vector3(0.6, 5.0, 2.0)
+material = SubResource("furniture_mat")
+
+[node name="DisplayCaseCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -5)
+size = Vector3(1.2, 1.1, 0.6)
+material = SubResource("furniture_mat")

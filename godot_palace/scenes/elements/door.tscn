@@ -1,23 +1,73 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=9 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/door.gd" id="1_script"]
 
 [sub_resource type="StandardMaterial3D" id="door_material"]
 albedo_color = Color(0.4, 0.28, 0.18, 1)
 
+[sub_resource type="StandardMaterial3D" id="frame_material"]
+albedo_color = Color(0.3, 0.22, 0.14, 1)
+
+[sub_resource type="StandardMaterial3D" id="handle_material"]
+albedo_color = Color(0.75, 0.65, 0.35, 1)
+metallic = 0.7
+roughness = 0.3
+
 [sub_resource type="BoxMesh" id="door_mesh"]
 size = Vector3(1.2, 2.5, 0.08)
+
+[sub_resource type="BoxMesh" id="handle_mesh"]
+size = Vector3(0.04, 0.12, 0.08)
 
 [sub_resource type="BoxShape3D" id="trigger_shape"]
 size = Vector3(2.0, 2.5, 2.0)
 
+[sub_resource type="BoxShape3D" id="door_collision"]
+size = Vector3(1.2, 2.5, 0.08)
+
 [node name="Door" type="Node3D" groups=["doors"]]
 script = ExtResource("1_script")
 
-[node name="DoorMesh" type="MeshInstance3D" parent="."]
+[node name="DoorFrame" type="Node3D" parent="."]
+
+[node name="FrameLeft" type="CSGBox3D" parent="DoorFrame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.7, 1.25, 0)
+size = Vector3(0.12, 2.7, 0.2)
+material = SubResource("frame_material")
+
+[node name="FrameRight" type="CSGBox3D" parent="DoorFrame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 1.25, 0)
+size = Vector3(0.12, 2.7, 0.2)
+material = SubResource("frame_material")
+
+[node name="FrameTop" type="CSGBox3D" parent="DoorFrame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.65, 0)
+size = Vector3(1.52, 0.12, 0.2)
+material = SubResource("frame_material")
+
+[node name="DoorPanel" type="Node3D" parent="."]
+
+[node name="DoorMesh" type="MeshInstance3D" parent="DoorPanel"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
 mesh = SubResource("door_mesh")
 surface_material_override/0 = SubResource("door_material")
+
+[node name="HandleRight" type="MeshInstance3D" parent="DoorPanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.1, 0.06)
+mesh = SubResource("handle_mesh")
+surface_material_override/0 = SubResource("handle_material")
+
+[node name="HandleLeft" type="MeshInstance3D" parent="DoorPanel"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.1, -0.06)
+mesh = SubResource("handle_mesh")
+surface_material_override/0 = SubResource("handle_material")
+
+[node name="DoorCollision" type="StaticBody3D" parent="DoorPanel"]
+collision_layer = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DoorPanel/DoorCollision"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+shape = SubResource("door_collision")
 
 [node name="TriggerArea" type="Area3D" parent="."]
 collision_layer = 8

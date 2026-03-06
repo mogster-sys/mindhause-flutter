@@ -12,6 +12,24 @@ extends CharacterBody3D
 @onready var raycast: RayCast3D = $Camera3D/InteractRay
 @onready var head_bob_timer: float = 0.0
 
+# Footstep audio
+var _last_step_sign: float = 1.0  # Tracks head bob cycle for step timing
+var _step_cooldown: float = 0.0
+
+# Floor surface type per room (for footstep sounds)
+var _room_floor_sounds: Dictionary = {
+	"foyer": "footstep_stone",
+	"study": "footstep_wood",
+	"library": "footstep_wood",
+	"kitchen": "footstep_stone",
+	"workshop": "footstep_stone",
+	"garden": "footstep_grass",
+	"bedroom": "footstep_wood",
+	"gymnasium": "footstep_wood",
+	"treasury": "footstep_stone",
+	"cellar": "footstep_stone",
+}
+
 # Touch input state
 var _touch_look_index: int = -1
 var _touch_move_index: int = -1
@@ -56,12 +74,21 @@ func _physics_process(delta: float) -> void:
 		velocity.z = direction.z * move_speed
 		# Head bob
 		head_bob_timer += delta * head_bob_frequency
-		camera.position.y = sin(head_bob_timer) * head_bob_amplitude + 0.6
+		var bob_val := sin(head_bob_timer)
+		camera.position.y = bob_val * head_bob_amplitude + 0.6
+
+		# Play footstep at each bob cycle crossing (bottom of step)
+		_step_cooldown -= delta
+		if bob_val < 0.0 and _last_step_sign >= 0.0 and _step_cooldown <= 0.0:
+			_play_footstep()
+			_step_cooldown = 0.25  # Min gap between steps
+		_last_step_sign = bob_val
 	else:
 		velocity.x = move_toward(velocity.x, 0, move_speed * delta * 8)
 		velocity.z = move_toward(velocity.z, 0, move_speed * delta * 8)
 		# Settle head bob
 		camera.position.y = lerp(camera.position.y, 0.6, delta * 5)
+		_last_step_sign = 1.0
 
 	move_and_slide()
 
@@ -164,6 +191,11 @@ func _try_interact() -> void:
 		var parent := look_target.get_parent()
 		if parent and parent.has_method("interact"):
 			parent.interact()
+
+
+func _play_footstep() -> void:
+	var sfx_name: String = _room_floor_sounds.get(GameState.current_room, "footstep_stone")
+	AudioManager.play_sfx(sfx_name, 0.4)
 
 
 func _is_mobile() -> bool:
