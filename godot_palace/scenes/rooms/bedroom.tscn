@@ -24,59 +24,59 @@ ambient_light_energy = 0.35
 
 [node name="Bedroom" type="Node3D"]
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
 environment = SubResource("env")
 
 [node name="SpawnPoint" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
 
-[node name="Floor" type="CSGBox3D" parent="."]
+[node name="Floor" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 use_collision = true
 size = Vector3(8, 0.2, 8)
 material = SubResource("floor_mat")
 
-[node name="Ceiling" type="CSGBox3D" parent="."]
+[node name="Ceiling" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
 size = Vector3(8, 0.2, 8)
 material = SubResource("ceiling_mat")
 
-[node name="WallNorth" type="CSGBox3D" parent="."]
+[node name="WallNorth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
 material = SubResource("wall_mat")
 
-[node name="WallSouth" type="CSGBox3D" parent="."]
+[node name="WallSouth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
 material = SubResource("wall_mat")
 
-[node name="WallEast" type="CSGBox3D" parent="."]
+[node name="WallEast" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
 material = SubResource("wall_mat")
 
-[node name="WallWest" type="CSGBox3D" parent="."]
+[node name="WallWest" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
 material = SubResource("wall_mat")
 
-[node name="BedCSG" type="CSGBox3D" parent="."]
+[node name="BedCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.3, -2.5)
 size = Vector3(2, 0.6, 2.5)
 material = SubResource("bed_mat")
 
-[node name="BedsideLight" type="OmniLight3D" parent="."]
+[node name="BedsideLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -2.5)
 light_color = Color(1.0, 0.88, 0.7, 1)
 light_energy = 0.6
 omni_range = 4.0
 
-[node name="DeskLight" type="OmniLight3D" parent="."]
+[node name="DeskLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -2)
 light_color = Color(1.0, 0.92, 0.78, 1)
 light_energy = 0.8

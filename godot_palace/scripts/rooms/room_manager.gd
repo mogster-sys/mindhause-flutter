@@ -90,6 +90,9 @@ func _load_room(room_id: String) -> void:
 	# Apply time-of-day lighting
 	_apply_lighting()
 
+	# Apply current theme textures and colors
+	ThemeManager.refresh_room()
+
 
 func _unload_current_room() -> void:
 	if current_room_node:
