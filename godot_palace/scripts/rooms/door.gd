@@ -1,5 +1,5 @@
 ## Door — connects rooms in the palace
-## Can be walked through or tapped via reticule
+## Auto-transitions when the player walks through the doorway
 ## Animates open/close, shows destination name
 extends Node3D
 
@@ -23,7 +23,6 @@ func _ready() -> void:
 
 
 func get_destination_name() -> String:
-	# Look up display name from game state
 	for room in GameState.all_rooms:
 		if room.get("name", "") == destination_room or room.get("id", "") == destination_room:
 			return room.get("display_name", destination_room.capitalize())
@@ -32,8 +31,6 @@ func get_destination_name() -> String:
 
 func interact() -> void:
 	if requires_unlock:
-		# Check if room is unlocked in settings
-		# For now, all rooms are unlocked
 		pass
 	_transition_to_room()
 
@@ -43,12 +40,14 @@ func _on_body_entered(body: Node3D) -> void:
 		_player_nearby = true
 		if not _is_open:
 			_open_door()
+		# Auto-transition when the player walks into the door zone
+		if GameState.door_cooldown <= 0.0:
+			_transition_to_room()
 
 
 func _on_body_exited(body: Node3D) -> void:
 	if body.is_in_group("player"):
 		_player_nearby = false
-		# Close door after a delay
 		await get_tree().create_timer(1.5).timeout
 		if not _player_nearby and _is_open:
 			_close_door()
@@ -60,8 +59,7 @@ func _open_door() -> void:
 	if animation_player and animation_player.has_animation("open"):
 		animation_player.play("open")
 	else:
-		# Fallback: just rotate
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.tween_property(door_panel, "rotation_degrees:y", -90.0, 0.5).set_ease(Tween.EASE_OUT)
 
 
@@ -71,14 +69,15 @@ func _close_door() -> void:
 	if animation_player and animation_player.has_animation("close"):
 		animation_player.play("close")
 	else:
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.tween_property(door_panel, "rotation_degrees:y", 0.0, 0.4).set_ease(Tween.EASE_IN)
 
 
 func _transition_to_room() -> void:
+	if GameState.door_cooldown > 0.0:
+		return
+	# Set cooldown so spawning near a door in the new room doesn't re-trigger
+	GameState.door_cooldown = 2.0
 	if is_stairs:
 		AudioManager.play_sfx("stairs_step")
-	# Fade to black, load new room, fade in
 	GameState.change_room(destination_room)
-	# Room manager handles the actual scene transition
-	# This just signals the intent

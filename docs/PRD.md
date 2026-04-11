@@ -364,6 +364,61 @@ When the cat is enabled, the HUD and cat work as complementary systems:
 - If the cat is leading the player somewhere, a small paw-print indicator appears on the HUD showing the cat's direction
 - The HUD never waits for the cat — it's always instantaneous
 
+### 9.4 Mnemonic-Informed HUD Features
+
+MindHause is inherently a Method of Loci implementation — the rooms are loci, task objects are memory images, the cat is a retrieval cue, and themes are mood contexts. The following features explicitly leverage mnemonic science to strengthen spatial recall and make the palace a genuine memory tool, not just a metaphor.
+
+#### Room Entry Banner
+
+When the player enters a room, a styled banner appears at the top of the screen showing:
+- The room's display name (large text)
+- Active task count for that room
+
+The banner fades in, holds for 2.5 seconds, then fades out. This reinforces the spatial association: you always know WHERE you are and WHAT is here.
+
+#### Placement Confirmation (Spatial Address)
+
+When a task object is placed on a surface, a toast notification appears showing the full spatial address:
+- **Room > Surface > Slot** (e.g., "Study > Writing Desk > Slot 3")
+
+When the reticle hovers over a surface, the hint shows the surface name and available slot count (e.g., "Writing Desk (6 free)"). This makes placement intentional — the user consciously registers WHERE they put something, which is the encoding step of the Method of Loci.
+
+#### Retrieval Quiz ("Where Was It?")
+
+After several room transitions (minimum 3, with a 15% random chance per transition), a quiz overlay appears:
+- Shows a task title from a DIFFERENT room than the current one
+- Asks "Which room is this in?"
+- Presents 4 room name buttons (1 correct, 3 random wrong)
+- Correct answer shows green "Correct!" feedback
+- Wrong answer shows red "It's in [Room Name]" feedback
+- Auto-dismisses after 2 seconds
+
+This is lightweight retrieval practice — the most effective memory technique. The quiz is infrequent enough to not be annoying, but frequent enough to build strong room-task associations over time.
+
+#### Cat Morning Walk (Guided Review)
+
+The cat leads a daily review tour through all rooms that have active tasks:
+- Follows a fixed route order (Foyer → Study → Library → Garden → Kitchen → Workshop → Bedroom → Gymnasium → Treasury → Cellar)
+- In each room, the cat walks to each task object, pauses (2.5s) to let the player see it, then moves to the next
+- After visiting all tasks in a room, the cat heads toward the door to the next room with tasks
+- The player follows; the auto-transition door system handles room changes
+- Walk completes with a celebratory purr and happiness boost
+
+The walk auto-triggers at dawn/morning if there are active tasks (once per session). It can also be triggered manually via `GameState.morning_walk_requested`.
+
+This is literally the retrieval step of the Method of Loci: walking a fixed route, visiting each locus in order.
+
+#### Design Rationale
+
+These features are informed by five mnemonic systems documented in `docs/MNEMONIC_SYSTEMS_REFERENCE.md`:
+1. **Method of Loci** — the entire palace structure (rooms, surfaces, route order)
+2. **Spatial encoding** — placement confirmation makes surface choice conscious
+3. **Retrieval practice** — the quiz tests and strengthens room-task associations
+4. **Route consistency** — the morning walk follows the same order every time
+5. **Emotional context** — themes and time-of-day lighting provide mood-based encoding cues
+
+Future expansion: Study Palace mode (flashcards placed in rooms with spaced repetition), custom palaces, and visual encoding assistance. See `docs/MNEMONIC_DESIGN_IDEAS.md`.
+
 ---
 
 ## 10. Input and Controls
@@ -568,6 +623,8 @@ The app respects the user. No dark patterns, no engagement farming, no data harv
 - Monster task evolution system (toggleable)
 - Cat companion with full behaviour (toggleable)
 - Cat-monster interaction (hissing)
+- Cat morning walk (guided daily review tour)
+- Mnemonic HUD features (room banner, placement confirmation, retrieval quiz)
 - Habit tracking with garden growth
 - Goal system with milestone relics
 - Ambient progress feedback

@@ -66,16 +66,16 @@ func _physics_process(delta: float) -> void:
 		velocity.y -= GRAVITY * delta
 
 	# Movement input
-	var input_dir := _get_movement_input()
-	var direction := (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
+	var input_dir = _get_movement_input()
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	if direction:
 		velocity.x = direction.x * move_speed
 		velocity.z = direction.z * move_speed
 		# Head bob
 		head_bob_timer += delta * head_bob_frequency
-		var bob_val := sin(head_bob_timer)
-		camera.position.y = bob_val * head_bob_amplitude + 0.6
+		var bob_val: float = sin(head_bob_timer)
+		camera.position.y = bob_val * head_bob_amplitude + 1.6
 
 		# Play footstep at each bob cycle crossing (bottom of step)
 		_step_cooldown -= delta
@@ -87,7 +87,7 @@ func _physics_process(delta: float) -> void:
 		velocity.x = move_toward(velocity.x, 0, move_speed * delta * 8)
 		velocity.z = move_toward(velocity.z, 0, move_speed * delta * 8)
 		# Settle head bob
-		camera.position.y = lerp(camera.position.y, 0.6, delta * 5)
+		camera.position.y = lerp(camera.position.y, 1.6, delta * 5)
 		_last_step_sign = 1.0
 
 	move_and_slide()
@@ -138,7 +138,7 @@ func _handle_touch_input(event: InputEvent) -> void:
 				_touch_move_current = _touch_move_start
 			elif event.index == _touch_look_index:
 				# Quick tap on right side = interact
-				var tap_distance := event.position.distance_to(_touch_look_start)
+				var tap_distance: float = event.position.distance_to(_touch_look_start)
 				if tap_distance < 20.0:
 					_try_interact()
 				_touch_look_index = -1
@@ -162,8 +162,8 @@ func _rotate_camera(relative: Vector2) -> void:
 func _get_movement_input() -> Vector2:
 	if _is_mobile():
 		if _touch_move_index >= 0:
-			var delta := _touch_move_current - _touch_move_start
-			var max_distance := 100.0
+			var delta = _touch_move_current - _touch_move_start
+			var max_distance = 100.0
 			delta = delta.limit_length(max_distance) / max_distance
 			return Vector2(delta.x, delta.y)
 		return Vector2.ZERO
@@ -173,7 +173,7 @@ func _get_movement_input() -> Vector2:
 
 func _update_look_target() -> void:
 	if raycast.is_colliding():
-		var collider := raycast.get_collider()
+		var collider = raycast.get_collider()
 		if collider is Node3D:
 			look_target = collider
 			look_target_distance = global_position.distance_to(raycast.get_collision_point())
@@ -188,7 +188,7 @@ func _try_interact() -> void:
 		look_target.interact()
 	elif look_target and look_target is Area3D:
 		# Might be a door trigger
-		var parent := look_target.get_parent()
+		var parent = look_target.get_parent()
 		if parent and parent.has_method("interact"):
 			parent.interact()
 

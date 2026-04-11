@@ -34,21 +34,21 @@ func _process(delta: float) -> void:
 
 func _evolve_tasks() -> void:
 	# Check all tasks for monster evolution
-	var neglectable := DatabaseBridge.get_neglectable_tasks()
-	var now := int(Time.get_unix_time_from_system())
+	var neglectable = DatabaseBridge.get_neglectable_tasks()
+	var now = int(Time.get_unix_time_from_system())
 
 	for task in neglectable:
 		var last_interaction = task.get("last_interaction", now)
 		if typeof(last_interaction) != TYPE_INT:
 			continue
 
-		var hours_since := (now - last_interaction) / 3600.0
-		var thresholds := GameState.monster_thresholds.get(
+		var hours_since = (now - last_interaction) / 3600.0
+		var thresholds = GameState.monster_thresholds.get(
 			GameState.monster_sensitivity,
 			GameState.monster_thresholds["normal"]
 		)
 
-		var new_state := "none"
+		var new_state = "none"
 		if hours_since >= thresholds["monster"]:
 			new_state = "monster"
 		elif hours_since >= thresholds["corrupting"]:
@@ -75,15 +75,15 @@ func _refresh_active_monsters() -> void:
 
 func _process_chasers(delta: float) -> void:
 	# Find monster task objects in the current room
-	var player := _get_player()
+	var player = _get_player()
 	if not player:
 		return
 
-	var monster_objects := get_tree().get_nodes_in_group("task_objects").filter(
+	var monster_objects = get_tree().get_nodes_in_group("task_objects").filter(
 		func(n): return n.visual_state == n.VisualState.MONSTER
 	)
 
-	var any_chasing := false
+	var any_chasing = false
 	for monster in monster_objects:
 		if not monster is RigidBody3D:
 			continue
@@ -93,7 +93,7 @@ func _process_chasers(delta: float) -> void:
 		if dist < chase_range and dist > 1.5:
 			any_chasing = true
 			# Chase the player
-			var direction := (player.global_position - monster.global_position).normalized()
+			var direction = (player.global_position - monster.global_position).normalized()
 			# Monsters move along the floor
 			direction.y = 0
 			monster.linear_velocity = direction * chase_speed
@@ -120,7 +120,7 @@ func _on_room_changed(_from: String, _to: String) -> void:
 
 
 func _get_player() -> CharacterBody3D:
-	var players := get_tree().get_nodes_in_group("player")
+	var players = get_tree().get_nodes_in_group("player")
 	if players.size() > 0:
 		return players[0] as CharacterBody3D
 	return null

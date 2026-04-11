@@ -72,9 +72,9 @@ func _process(delta: float) -> void:
 
 
 func _update_time() -> void:
-	var time := Time.get_time_dict_from_system()
+	var time = Time.get_time_dict_from_system()
 	current_hour = time["hour"]
-	var old_period := current_period
+	var old_period = current_period
 	current_period = _hour_to_period(current_hour)
 	if current_period != old_period:
 		time_period_changed.emit(Period.keys()[current_period])

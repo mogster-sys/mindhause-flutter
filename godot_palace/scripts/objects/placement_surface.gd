@@ -2,6 +2,8 @@
 ## Manages capacity and snap positions for objects
 extends StaticBody3D
 
+signal object_placed(surface_name: String, slot_number: int)
+
 @export var surface_id: String = ""
 @export var surface_type: String = "desk"  # desk, shelf, wall, pedestal, notice_board, picture_frame, chalkboard, floor
 @export var capacity: int = 10
@@ -15,14 +17,27 @@ func _ready() -> void:
 	add_to_group("surfaces")
 
 
+## Human-readable name derived from node name (e.g. "WritingDesk" → "Writing Desk")
+func get_display_name() -> String:
+	var raw: String = name
+	# Insert space before each uppercase letter that follows a lowercase letter
+	var result: String = ""
+	for i in range(raw.length()):
+		var ch: String = raw[i]
+		if i > 0 and ch == ch.to_upper() and ch != ch.to_lower() and raw[i - 1] == raw[i - 1].to_lower():
+			result += " "
+		result += ch
+	return result
+
+
 ## Get the next available position on this surface
 func get_next_slot() -> Vector3:
 	if occupied_slots.size() >= capacity:
 		return Vector3.ZERO  # Full
 
-	var slot_index := occupied_slots.size()
-	var local_pos := _calculate_slot_position(slot_index)
-	var world_pos := to_global(local_pos)
+	var slot_index = occupied_slots.size()
+	var local_pos = _calculate_slot_position(slot_index)
+	var world_pos = to_global(local_pos)
 	occupied_slots.append(world_pos)
 	return world_pos
 
@@ -32,7 +47,8 @@ func place_object(obj: Node3D) -> bool:
 	if placed_objects.size() >= capacity:
 		return false
 
-	var pos := get_next_slot()
+	var slot_num: int = placed_objects.size() + 1
+	var pos = get_next_slot()
 	if pos == Vector3.ZERO:
 		return false
 
@@ -43,12 +59,13 @@ func place_object(obj: Node3D) -> bool:
 	if obj is RigidBody3D:
 		obj.freeze = true
 
+	object_placed.emit(get_display_name(), slot_num)
 	return true
 
 
 ## Remove an object from this surface
 func remove_object(obj: Node3D) -> void:
-	var idx := placed_objects.find(obj)
+	var idx = placed_objects.find(obj)
 	if idx >= 0:
 		placed_objects.remove_at(idx)
 		occupied_slots.remove_at(idx)
@@ -60,9 +77,9 @@ func _calculate_slot_position(index: int) -> Vector3:
 	match surface_type:
 		"desk", "shelf":
 			# Grid layout on a flat surface
-			var cols := ceili(sqrt(float(capacity)))
-			var row := index / cols
-			var col := index % cols
+			var cols = ceili(sqrt(float(capacity)))
+			var row = index / cols
+			var col = index % cols
 			return Vector3(
 				(col - cols / 2.0) * slot_spacing,
 				0.05,  # Slightly above surface
@@ -70,9 +87,9 @@ func _calculate_slot_position(index: int) -> Vector3:
 			)
 		"wall", "notice_board", "picture_frame", "chalkboard":
 			# Vertical grid
-			var cols := ceili(sqrt(float(capacity)))
-			var row := index / cols
-			var col := index % cols
+			var cols = ceili(sqrt(float(capacity)))
+			var row = index / cols
+			var col = index % cols
 			return Vector3(
 				(col - cols / 2.0) * slot_spacing,
 				-(row - cols / 2.0) * slot_spacing,
@@ -83,8 +100,8 @@ func _calculate_slot_position(index: int) -> Vector3:
 			return Vector3(0, 0.1, 0)
 		"floor":
 			# Spread out more
-			var angle := index * TAU / max(capacity, 1)
-			var radius := 0.5 + index * 0.1
+			var angle: float = index * TAU / max(capacity, 1)
+			var radius: float = 0.5 + index * 0.1
 			return Vector3(cos(angle) * radius, 0.05, sin(angle) * radius)
 		_:
 			return Vector3(index * slot_spacing, 0.05, 0)

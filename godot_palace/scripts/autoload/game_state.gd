@@ -7,11 +7,14 @@ signal task_interacted(task_id: String)
 signal monster_spawned(task_id: String, room_id: String)
 signal cat_alert(message: String)
 signal settings_changed(key: String, value: String)
+signal task_placed(room_name: String, surface_name: String, slot_number: int)
+signal morning_walk_requested()
 
 # Current state
 var current_room: String = "foyer"
 var previous_room: String = ""
 var player_position: Vector3 = Vector3.ZERO
+var door_cooldown: float = 0.0
 
 # Settings (synced from SQLite)
 var monsters_enabled: bool = true
@@ -34,12 +37,16 @@ var monster_thresholds: Dictionary = {
 
 
 func _ready() -> void:
-	# Load settings from database bridge on startup
 	_load_settings()
 
 
+func _process(delta: float) -> void:
+	if door_cooldown > 0.0:
+		door_cooldown -= delta
+
+
 func _load_settings() -> void:
-	var db := DatabaseBridge
+	var db = DatabaseBridge
 	monsters_enabled = db.get_setting("monsters_enabled") == "true"
 	monster_chasing = db.get_setting("monster_chasing") == "true"
 	monster_sensitivity = db.get_setting("monster_sensitivity")
@@ -50,8 +57,8 @@ func _load_settings() -> void:
 func change_room(new_room: String) -> void:
 	previous_room = current_room
 	current_room = new_room
-	room_changed.emit(previous_room, new_room)
 	_refresh_room_tasks()
+	room_changed.emit(previous_room, new_room)
 
 
 func _refresh_room_tasks() -> void:

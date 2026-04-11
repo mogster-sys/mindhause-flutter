@@ -1,17 +1,76 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=18 format=3]
 
 [ext_resource type="Script" path="res://scripts/ai/cat_companion.gd" id="1_script"]
+[ext_resource type="Script" path="res://scripts/ai/cat_procedural.gd" id="2_procedural"]
+[ext_resource type="Script" path="res://scripts/ai/cat_brain.gd" id="3_brain"]
+[ext_resource type="Script" path="res://scripts/ai/cat_movement.gd" id="4_movement"]
+[ext_resource type="Script" path="res://scripts/ai/cat_animation.gd" id="5_animation"]
+[ext_resource type="Script" path="res://scripts/ai/cat_memory.gd" id="6_memory"]
+[ext_resource type="Script" path="res://scripts/ai/cat_skin.gd" id="7_skin"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1"]
-radius = 0.15
-height = 0.5
+radius = 0.12
+height = 0.45
 
-[sub_resource type="StandardMaterial3D" id="cat_material"]
+[sub_resource type="StandardMaterial3D" id="body_mat"]
 albedo_color = Color(0.85, 0.55, 0.25, 1)
 
-[sub_resource type="CapsuleMesh" id="cat_mesh"]
-radius = 0.15
-height = 0.5
+[sub_resource type="StandardMaterial3D" id="head_mat"]
+albedo_color = Color(0.85, 0.55, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="ear_mat"]
+albedo_color = Color(0.75, 0.45, 0.2, 1)
+
+[sub_resource type="StandardMaterial3D" id="ear_inner_mat"]
+albedo_color = Color(0.95, 0.7, 0.65, 1)
+
+[sub_resource type="StandardMaterial3D" id="tail_mat"]
+albedo_color = Color(0.85, 0.55, 0.25, 1)
+
+[sub_resource type="StandardMaterial3D" id="leg_mat"]
+albedo_color = Color(0.8, 0.5, 0.22, 1)
+
+[sub_resource type="StandardMaterial3D" id="eye_mat"]
+albedo_color = Color(0.15, 0.15, 0.1, 1)
+
+[sub_resource type="StandardMaterial3D" id="nose_mat"]
+albedo_color = Color(0.85, 0.55, 0.5, 1)
+
+[sub_resource type="SphereMesh" id="body_mesh"]
+radius = 0.18
+height = 0.3
+radial_segments = 16
+rings = 8
+
+[sub_resource type="SphereMesh" id="head_mesh"]
+radius = 0.11
+height = 0.2
+radial_segments = 16
+rings = 8
+
+[sub_resource type="CylinderMesh" id="ear_mesh"]
+top_radius = 0.0
+bottom_radius = 0.035
+height = 0.06
+radial_segments = 8
+
+[sub_resource type="CylinderMesh" id="tail_mesh"]
+top_radius = 0.012
+bottom_radius = 0.018
+height = 0.12
+radial_segments = 6
+
+[sub_resource type="CylinderMesh" id="leg_mesh"]
+top_radius = 0.02
+bottom_radius = 0.025
+height = 0.12
+radial_segments = 6
+
+[sub_resource type="SphereMesh" id="eye_mesh"]
+radius = 0.018
+height = 0.03
+radial_segments = 8
+rings = 4
 
 [node name="Cat" type="CharacterBody3D" groups=["cat"]]
 collision_layer = 16
@@ -19,16 +78,119 @@ collision_mask = 1
 script = ExtResource("1_script")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.18, 0)
 shape = SubResource("CapsuleShape3D_1")
 
-[node name="CatMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-mesh = SubResource("cat_mesh")
-surface_material_override/0 = SubResource("cat_material")
+[node name="CatMesh" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+
+[node name="Body" type="MeshInstance3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1.8, 0, 0.05, 0)
+mesh = SubResource("body_mesh")
+surface_material_override/0 = SubResource("body_mat")
+
+[node name="Head" type="Node3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, -0.28)
+
+[node name="HeadMesh" type="MeshInstance3D" parent="CatMesh/Head"]
+mesh = SubResource("head_mesh")
+surface_material_override/0 = SubResource("head_mat")
+
+[node name="EarL" type="Node3D" parent="CatMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.055, 0.1, 0.01)
+
+[node name="EarMesh" type="MeshInstance3D" parent="CatMesh/Head/EarL"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("ear_mesh")
+surface_material_override/0 = SubResource("ear_mat")
+
+[node name="EarR" type="Node3D" parent="CatMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.055, 0.1, 0.01)
+
+[node name="EarMesh" type="MeshInstance3D" parent="CatMesh/Head/EarR"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("ear_mesh")
+surface_material_override/0 = SubResource("ear_mat")
+
+[node name="EyeL" type="MeshInstance3D" parent="CatMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.04, 0.025, -0.085)
+mesh = SubResource("eye_mesh")
+surface_material_override/0 = SubResource("eye_mat")
+
+[node name="EyeR" type="MeshInstance3D" parent="CatMesh/Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.04, 0.025, -0.085)
+mesh = SubResource("eye_mesh")
+surface_material_override/0 = SubResource("eye_mat")
+
+[node name="Nose" type="MeshInstance3D" parent="CatMesh/Head"]
+transform = Transform3D(0.5, 0, 0, 0, 0.5, 0, 0, 0, 0.5, 0, -0.01, -0.1)
+mesh = SubResource("eye_mesh")
+surface_material_override/0 = SubResource("nose_mat")
+
+[node name="TailBase" type="Node3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.08, 0.28)
+
+[node name="TailBaseMesh" type="MeshInstance3D" parent="CatMesh/TailBase"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.06, 0)
+mesh = SubResource("tail_mesh")
+surface_material_override/0 = SubResource("tail_mat")
+
+[node name="TailMid" type="Node3D" parent="CatMesh/TailBase"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="TailMidMesh" type="MeshInstance3D" parent="CatMesh/TailBase/TailMid"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.06, 0)
+mesh = SubResource("tail_mesh")
+surface_material_override/0 = SubResource("tail_mat")
+
+[node name="TailTip" type="Node3D" parent="CatMesh/TailBase/TailMid"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.12, 0)
+
+[node name="TailTipMesh" type="MeshInstance3D" parent="CatMesh/TailBase/TailMid/TailTip"]
+transform = Transform3D(0.7, 0, 0, 0, 0, -0.7, 0, 0.7, 0, 0, 0.04, 0)
+mesh = SubResource("tail_mesh")
+surface_material_override/0 = SubResource("tail_mat")
+
+[node name="LegFL" type="MeshInstance3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.06, -0.14)
+mesh = SubResource("leg_mesh")
+surface_material_override/0 = SubResource("leg_mat")
+
+[node name="LegFR" type="MeshInstance3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, -0.06, -0.14)
+mesh = SubResource("leg_mesh")
+surface_material_override/0 = SubResource("leg_mat")
+
+[node name="LegBL" type="MeshInstance3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.08, -0.06, 0.14)
+mesh = SubResource("leg_mesh")
+surface_material_override/0 = SubResource("leg_mat")
+
+[node name="LegBR" type="MeshInstance3D" parent="CatMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.08, -0.06, 0.14)
+mesh = SubResource("leg_mesh")
+surface_material_override/0 = SubResource("leg_mat")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 path_desired_distance = 0.5
 target_desired_distance = 0.5
+avoidance_enabled = true
+radius = 0.2
 
-[node name="AnimationTree" type="AnimationTree" parent="."]
+[node name="CatBrain" type="Node" parent="."]
+script = ExtResource("3_brain")
+
+[node name="CatMovement" type="Node" parent="."]
+script = ExtResource("4_movement")
+
+[node name="CatAnimation" type="Node" parent="."]
+script = ExtResource("5_animation")
+
+[node name="CatProcedural" type="Node" parent="."]
+script = ExtResource("2_procedural")
+
+[node name="CatMemory" type="Node" parent="."]
+script = ExtResource("6_memory")
+
+[node name="CatSkin" type="Node" parent="."]
+script = ExtResource("7_skin")

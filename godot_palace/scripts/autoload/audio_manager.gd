@@ -59,7 +59,7 @@ var _stream_cache: Dictionary = {}
 func _ready() -> void:
 	# Create SFX player pool
 	for i in _pool_size:
-		var player := AudioStreamPlayer.new()
+		var player = AudioStreamPlayer.new()
 		player.bus = "SFX"
 		add_child(player)
 		_sfx_pool.append(player)
@@ -70,13 +70,13 @@ func _ready() -> void:
 	add_child(_music_player)
 
 	# Load volume from settings
-	var saved_sfx := DatabaseBridge.get_setting("sfx_volume")
+	var saved_sfx = DatabaseBridge.get_setting("sfx_volume")
 	if saved_sfx != "":
 		sfx_volume = float(saved_sfx)
-	var saved_music := DatabaseBridge.get_setting("music_volume")
+	var saved_music = DatabaseBridge.get_setting("music_volume")
 	if saved_music != "":
 		music_volume = float(saved_music)
-	var saved_enabled := DatabaseBridge.get_setting("audio_enabled")
+	var saved_enabled = DatabaseBridge.get_setting("audio_enabled")
 	if saved_enabled != "":
 		master_enabled = saved_enabled == "true"
 
@@ -89,15 +89,15 @@ func play_sfx(sfx_name: String, volume_override: float = -1.0) -> bool:
 		push_warning("AudioManager: Unknown SFX name: " + sfx_name)
 		return false
 
-	var stream := _load_stream(sfx_paths[sfx_name])
+	var stream = _load_stream(sfx_paths[sfx_name])
 	if not stream:
 		return false  # File not yet added — silent fallback
 
-	var player := _sfx_pool[_pool_index]
+	var player = _sfx_pool[_pool_index]
 	_pool_index = (_pool_index + 1) % _pool_size
 
 	player.stream = stream
-	var vol := volume_override if volume_override >= 0.0 else sfx_volume
+	var vol = volume_override if volume_override >= 0.0 else sfx_volume
 	player.volume_db = linear_to_db(vol)
 	player.play()
 	return true
@@ -114,7 +114,7 @@ func play_music(theme_name: String) -> void:
 		push_warning("AudioManager: Unknown music theme: " + theme_name)
 		return
 
-	var stream := _load_stream(music_paths[theme_name])
+	var stream = _load_stream(music_paths[theme_name])
 	if not stream:
 		return  # File not yet added
 
@@ -122,7 +122,7 @@ func play_music(theme_name: String) -> void:
 
 	# Fade out current, then start new
 	if _music_player.playing:
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.tween_property(_music_player, "volume_db", -40.0, 1.0)
 		tween.tween_callback(func():
 			_music_player.stream = stream
@@ -138,7 +138,7 @@ func play_music(theme_name: String) -> void:
 ## Stop music with fade out
 func stop_music(fade_duration: float = 1.0) -> void:
 	if _music_player.playing:
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.tween_property(_music_player, "volume_db", -40.0, fade_duration)
 		tween.tween_callback(_music_player.stop)
 		_current_music = ""
@@ -146,13 +146,13 @@ func stop_music(fade_duration: float = 1.0) -> void:
 
 ## Set SFX volume (0.0–1.0) and persist
 func set_sfx_volume(vol: float) -> void:
-	sfx_volume = clampf(vol, 0.0, 1.0)
+	sfx_volume = clamp(vol, 0.0, 1.0)
 	DatabaseBridge.set_setting("sfx_volume", str(sfx_volume))
 
 
 ## Set music volume (0.0–1.0) and persist
 func set_music_volume(vol: float) -> void:
-	music_volume = clampf(vol, 0.0, 1.0)
+	music_volume = clamp(vol, 0.0, 1.0)
 	if _music_player.playing:
 		_music_player.volume_db = linear_to_db(music_volume)
 	DatabaseBridge.set_setting("music_volume", str(music_volume))
@@ -175,7 +175,7 @@ func _load_stream(path: String) -> AudioStream:
 	if not ResourceLoader.exists(path):
 		return null  # File doesn't exist yet — graceful fallback
 
-	var stream := load(path) as AudioStream
+	var stream = load(path) as AudioStream
 	if stream:
 		_stream_cache[path] = stream
 	return stream

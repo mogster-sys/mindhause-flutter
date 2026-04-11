@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
@@ -25,6 +25,12 @@ ambient_light_energy = 0.35
 
 [sub_resource type="StandardMaterial3D" id="furniture_mat"]
 albedo_color = Color(0.5, 0.38, 0.28, 1)
+
+[sub_resource type="NavigationMesh" id="nav_mesh"]
+agent_radius = 0.2
+agent_height = 0.4
+agent_max_climb = 0.1
+
 [node name="Bedroom" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." groups=["room_environment"]]
@@ -56,11 +62,21 @@ use_collision = true
 size = Vector3(8, 4, 0.3)
 material = SubResource("wall_mat")
 
+[node name="Cutout_Foyer" type="CSGBox3D" parent="WallSouth"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 0)
+size = Vector3(1.5, 2.7, 0.5)
+
 [node name="WallEast" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
 material = SubResource("wall_mat")
+
+[node name="Cutout_Gymnasium" type="CSGBox3D" parent="WallEast"]
+operation = 2
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.65, 0)
+size = Vector3(0.5, 2.7, 1.5)
 
 [node name="WallWest" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2, 0)
@@ -131,3 +147,25 @@ material = SubResource("furniture_mat")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.25, -1.0)
 size = Vector3(0.5, 0.5, 0.5)
 material = SubResource("furniture_mat")
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+navigation_mesh = SubResource("nav_mesh")
+
+[node name="CatSpot_ByDoor" type="Marker3D" parent="." groups=["cat_spots"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 3)
+
+[node name="CatSpot_Center" type="Marker3D" parent="." groups=["cat_spots"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
+
+[node name="CatSpot_ByBedSide" type="Marker3D" parent="." groups=["cat_spots"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.05, -1)
+
+[node name="PerchPoint_Bed" type="Marker3D" parent="." groups=["cat_perches"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.6, -2.5)
+metadata/perch_height = 0.6
+metadata/facing = Vector3(1, 0, 0)
+
+[node name="PerchPoint_Desk" type="Marker3D" parent="." groups=["cat_perches"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.75, -2)
+metadata/perch_height = 0.75
+metadata/facing = Vector3(0, 0, 1)

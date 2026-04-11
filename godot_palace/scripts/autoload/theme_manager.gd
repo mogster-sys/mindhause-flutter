@@ -142,7 +142,7 @@ var themes: Dictionary = {
 
 
 func _ready() -> void:
-	var saved := DatabaseBridge.get_setting("theme")
+	var saved = DatabaseBridge.get_setting("theme")
 	if saved != "" and themes.has(saved):
 		current_theme = saved
 
@@ -186,10 +186,10 @@ func refresh_room() -> void:
 
 ## Apply current theme to all CSG materials and lights in the scene tree
 func _apply_to_scene_tree() -> void:
-	var theme_data := get_theme()
+	var theme_data = get_theme()
 
-	var csg_nodes := get_tree().get_nodes_in_group("themed_geometry")
-	if csg_nodes.is_empty():
+	var csg_nodes = get_tree().get_nodes_in_group("themed_geometry")
+	if csg_nodes.size() == 0:
 		# Fallback: walk the tree if no groups assigned
 		_apply_to_node(get_tree().root, theme_data)
 		return
@@ -202,7 +202,7 @@ func _apply_to_scene_tree() -> void:
 			light.light_color = theme_data["light_color"]
 			light.light_energy = theme_data["light_energy"]
 
-	var env_node := get_tree().get_first_node_in_group("room_environment")
+	var env_node = get_tree().get_first_node_in_group("room_environment")
 	if env_node and env_node is WorldEnvironment and env_node.environment:
 		env_node.environment.ambient_light_color = theme_data["ambient_color"]
 		env_node.environment.ambient_light_energy = theme_data["ambient_energy"]
@@ -251,7 +251,7 @@ func _apply_material_to_csg(node: CSGBox3D, theme_data: Dictionary) -> void:
 
 	# Try to apply texture first
 	if theme_data.has(texture_key):
-		var tex := _load_texture(theme_data[texture_key])
+		var tex = _load_texture(theme_data[texture_key])
 		if tex:
 			mat.albedo_texture = tex
 			mat.albedo_color = Color.WHITE  # Don't tint the texture
@@ -273,7 +273,7 @@ func _load_texture(path: String) -> Texture2D:
 		return _texture_cache[path]
 	if not ResourceLoader.exists(path):
 		return null
-	var tex := load(path) as Texture2D
+	var tex = load(path) as Texture2D
 	if tex:
 		_texture_cache[path] = tex
 	return tex

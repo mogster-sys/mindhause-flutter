@@ -46,19 +46,20 @@ size = Vector3(1.52, 0.12, 0.2)
 material = SubResource("frame_material")
 
 [node name="DoorPanel" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.6, 0, 0)
 
 [node name="DoorMesh" type="MeshInstance3D" parent="DoorPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.25, 0)
 mesh = SubResource("door_mesh")
 surface_material_override/0 = SubResource("door_material")
 
 [node name="HandleRight" type="MeshInstance3D" parent="DoorPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.1, 0.06)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 1.1, 0.06)
 mesh = SubResource("handle_mesh")
 surface_material_override/0 = SubResource("handle_material")
 
 [node name="HandleLeft" type="MeshInstance3D" parent="DoorPanel"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.45, 1.1, -0.06)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.05, 1.1, -0.06)
 mesh = SubResource("handle_mesh")
 surface_material_override/0 = SubResource("handle_material")
 
@@ -66,7 +67,7 @@ surface_material_override/0 = SubResource("handle_material")
 collision_layer = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DoorPanel/DoorCollision"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.6, 1.25, 0)
 shape = SubResource("door_collision")
 
 [node name="TriggerArea" type="Area3D" parent="."]

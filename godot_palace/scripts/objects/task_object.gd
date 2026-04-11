@@ -64,14 +64,14 @@ func _setup_visual() -> void:
 			_mesh.mesh.bottom_radius = 0.03
 			_mesh.mesh.height = 0.25
 			_mesh.rotation_degrees.z = 90
-			var shape := CylinderShape3D.new()
+			var shape = CylinderShape3D.new()
 			shape.radius = 0.03
 			shape.height = 0.25
 			_collision.shape = shape
 		"book":
 			_mesh.mesh = BoxMesh.new()
 			_mesh.mesh.size = Vector3(0.15, 0.22, 0.04)
-			var shape := BoxShape3D.new()
+			var shape = BoxShape3D.new()
 			shape.size = Vector3(0.15, 0.22, 0.04)
 			_collision.shape = shape
 		"candle":
@@ -79,14 +79,14 @@ func _setup_visual() -> void:
 			_mesh.mesh.top_radius = 0.015
 			_mesh.mesh.bottom_radius = 0.02
 			_mesh.mesh.height = 0.15
-			var shape := CylinderShape3D.new()
+			var shape = CylinderShape3D.new()
 			shape.radius = 0.02
 			shape.height = 0.15
 			_collision.shape = shape
 		"key":
 			_mesh.mesh = BoxMesh.new()
 			_mesh.mesh.size = Vector3(0.06, 0.02, 0.12)
-			var shape := BoxShape3D.new()
+			var shape = BoxShape3D.new()
 			shape.size = Vector3(0.06, 0.02, 0.12)
 			_collision.shape = shape
 		_:
@@ -94,7 +94,7 @@ func _setup_visual() -> void:
 			_mesh.mesh = SphereMesh.new()
 			_mesh.mesh.radius = 0.08
 			_mesh.mesh.height = 0.16
-			var shape := SphereShape3D.new()
+			var shape = SphereShape3D.new()
 			shape.radius = 0.08
 			_collision.shape = shape
 
@@ -111,10 +111,10 @@ func _setup_visual() -> void:
 
 
 func _load_task_data() -> void:
-	if task_id.is_empty():
+	if task_id == "":
 		return
 	task_data = DatabaseBridge.get_task_by_id(task_id)
-	if task_data.is_empty():
+	if task_data.size() == 0:
 		return
 
 	_apply_priority_glow()
@@ -144,17 +144,17 @@ func _apply_monster_state() -> void:
 			visual_state = VisualState.NEGLECTED
 			# Slight colour desaturation
 			if _mesh and _mesh.mesh:
-				var mat := StandardMaterial3D.new()
+				var mat = StandardMaterial3D.new()
 				mat.albedo_color = Color(0.6, 0.55, 0.5)
 				_mesh.material_override = mat
 		"corrupting":
 			visual_state = VisualState.CORRUPTING
 			if _mesh and _mesh.mesh:
-				var mat := StandardMaterial3D.new()
+				var mat = StandardMaterial3D.new()
 				mat.albedo_color = Color(0.4, 0.3, 0.3)
 				mat.emission_enabled = true
 				mat.emission = Color(0.5, 0.1, 0.1)
-				mat.emission_energy_multiplier = 0.3
+				mat.emission_energy = 0.3
 				_mesh.material_override = mat
 			if _glow:
 				_glow.light_color = Color(0.6, 0.2, 0.1)
@@ -163,11 +163,11 @@ func _apply_monster_state() -> void:
 			# Scale up and go red
 			scale *= MONSTER_SCALE_MULT
 			if _mesh and _mesh.mesh:
-				var mat := StandardMaterial3D.new()
+				var mat = StandardMaterial3D.new()
 				mat.albedo_color = Color(0.3, 0.1, 0.1)
 				mat.emission_enabled = true
 				mat.emission = GLOW_MONSTER
-				mat.emission_energy_multiplier = 0.8
+				mat.emission_energy = 0.8
 				_mesh.material_override = mat
 			if _glow:
 				_glow.light_color = GLOW_MONSTER
@@ -180,7 +180,7 @@ func _apply_monster_state() -> void:
 
 func _spawn_monster_particles() -> void:
 	_particles = GPUParticles3D.new()
-	var particle_mat := ParticleProcessMaterial.new()
+	var particle_mat = ParticleProcessMaterial.new()
 	particle_mat.emission_shape = ParticleProcessMaterial.EMISSION_SHAPE_SPHERE
 	particle_mat.emission_sphere_radius = 0.3
 	particle_mat.gravity = Vector3(0, 0.5, 0)
@@ -221,7 +221,7 @@ func complete() -> void:
 func _play_completion_effect() -> void:
 	AudioManager.play_sfx("task_complete")
 	if _glow:
-		var tween := create_tween()
+		var tween = create_tween()
 		tween.tween_property(_glow, "light_energy", 3.0, 0.3)
 		tween.tween_property(_glow, "light_energy", 0.0, 0.5)
 		tween.tween_callback(queue_free)
