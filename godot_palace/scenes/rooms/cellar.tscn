@@ -1,30 +1,38 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=21 format=3]
 
+[ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
-
-[sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.35, 0.32, 0.3, 1)
-
-[sub_resource type="StandardMaterial3D" id="wall_mat"]
-albedo_color = Color(0.4, 0.38, 0.35, 1)
-
-[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
-albedo_color = Color(0.38, 0.35, 0.32, 1)
-
-[sub_resource type="StandardMaterial3D" id="stone_mat"]
-albedo_color = Color(0.45, 0.42, 0.38, 1)
+[ext_resource type="Material" path="res://assets/materials/polyhaven/castle_brick_01/castle_brick_01.tres" id="brick_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/dark_wood/dark_wood.tres" id="wood_mat"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chandelier.gltf" id="chandelier"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Torch_Metal.gltf" id="torch"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Cauldron.gltf" id="cauldron"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chalice.gltf" id="chalice"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Banner_1.gltf" id="banner1"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Banner_2.gltf" id="banner2"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Barrel.gltf" id="barrel"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Crate_Wooden.gltf" id="crate"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chest_Wood.gltf" id="chest"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/CandleStick.gltf" id="candle"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
-background_color = Color(0.05, 0.05, 0.06, 1)
+background_color = Color(0.04, 0.04, 0.05, 1)
 ambient_light_source = 2
-ambient_light_color = Color(0.8, 0.7, 0.55, 1)
-ambient_light_energy = 0.15
-
-
-[sub_resource type="StandardMaterial3D" id="furniture_mat"]
-albedo_color = Color(0.5, 0.38, 0.28, 1)
+ambient_light_color = Color(0.7, 0.55, 0.4, 1)
+ambient_light_energy = 0.12
+tonemap_mode = 2
+tonemap_exposure = 1.15
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.6
+glow_strength = 1.15
+glow_bloom = 0.18
+fog_enabled = true
+fog_light_color = Color(0.5, 0.35, 0.2, 1)
+fog_light_energy = 0.25
+fog_density = 0.02
 
 [sub_resource type="NavigationMesh" id="nav_mesh"]
 agent_radius = 0.2
@@ -43,18 +51,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, -3)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 use_collision = true
 size = Vector3(10, 0.2, 10)
-material = SubResource("floor_mat")
+material = ExtResource("brick_mat")
 
 [node name="Ceiling" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.6, 0)
 size = Vector3(10, 0.2, 10)
-material = SubResource("ceiling_mat")
+material = ExtResource("brick_mat")
 
 [node name="WallNorth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, -5.15)
 use_collision = true
 size = Vector3(10, 3.5, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("brick_mat")
 
 [node name="Cutout_Foyer" type="CSGBox3D" parent="WallNorth"]
 operation = 2
@@ -65,43 +73,49 @@ size = Vector3(1.5, 2.7, 0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 5.15)
 use_collision = true
 size = Vector3(10, 3.5, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("brick_mat")
 
 [node name="WallEast" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.15, 1.75, 0)
 use_collision = true
 size = Vector3(0.3, 3.5, 10)
-material = SubResource("wall_mat")
+material = ExtResource("brick_mat")
 
 [node name="WallWest" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.15, 1.75, 0)
 use_collision = true
 size = Vector3(0.3, 3.5, 10)
-material = SubResource("wall_mat")
+material = ExtResource("brick_mat")
 
 [node name="PillarCSG1" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.75, -2)
 use_collision = true
 size = Vector3(0.5, 3.5, 0.5)
-material = SubResource("stone_mat")
+material = ExtResource("brick_mat")
 
 [node name="PillarCSG2" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.75, -2)
 use_collision = true
 size = Vector3(0.5, 3.5, 0.5)
-material = SubResource("stone_mat")
+material = ExtResource("brick_mat")
 
 [node name="TorchLight1" type="OmniLight3D" parent="." groups=["themed_lights"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 2.5, 0)
-light_color = Color(1.0, 0.75, 0.4, 1)
-light_energy = 0.8
-omni_range = 6.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.6, 2.3, 0)
+light_color = Color(1.0, 0.65, 0.3, 1)
+light_energy = 2.0
+omni_range = 7.0
 
 [node name="TorchLight2" type="OmniLight3D" parent="." groups=["themed_lights"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2.5, 0)
-light_color = Color(1.0, 0.75, 0.4, 1)
-light_energy = 0.8
-omni_range = 6.0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.6, 2.3, 0)
+light_color = Color(1.0, 0.65, 0.3, 1)
+light_energy = 2.0
+omni_range = 7.0
+
+[node name="CauldronGlow" type="OmniLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.6, 0)
+light_color = Color(1.0, 0.55, 0.2, 1)
+light_energy = 1.4
+omni_range = 3.0
 
 [node name="StoneTable" parent="." instance=ExtResource("surface")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
@@ -129,27 +143,59 @@ is_stairs = true
 [node name="StoneTableCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 size = Vector3(2.0, 0.6, 1.0)
-material = SubResource("furniture_mat")
+material = ExtResource("wood_mat")
 
 [node name="CellarShelfCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.75, -3)
 size = Vector3(0.15, 0.06, 2.0)
-material = SubResource("furniture_mat")
+material = ExtResource("wood_mat")
 
 [node name="CellarBracketL" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.55, -3.7)
 size = Vector3(0.12, 0.4, 0.06)
-material = SubResource("furniture_mat")
+material = ExtResource("wood_mat")
 
 [node name="CellarBracketR" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.5, 1.55, -2.3)
 size = Vector3(0.12, 0.4, 0.06)
-material = SubResource("furniture_mat")
+material = ExtResource("wood_mat")
 
-[node name="BarrelCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.4, 3.5)
-size = Vector3(0.6, 0.8, 0.6)
-material = SubResource("furniture_mat")
+; --- Gothic dressing: chandelier, wall torches, cauldron, banners, barrels, chest ---
+[node name="Chandelier" parent="." instance=ExtResource("chandelier")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 0, 3.4, 0)
+
+[node name="Torch_W" parent="." instance=ExtResource("torch")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -4.7, 2.0, 0)
+
+[node name="Torch_E" parent="." instance=ExtResource("torch")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 4.7, 2.0, 0)
+
+[node name="Cauldron" parent="." instance=ExtResource("cauldron")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 2.5, 0, 2)
+
+[node name="Chalice" parent="." instance=ExtResource("chalice")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0.4, 0.61, 0)
+
+[node name="CandleStick" parent="." instance=ExtResource("candle")]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -0.5, 0.61, 0.2)
+
+[node name="Banner_1" parent="." instance=ExtResource("banner1")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -2.5, 1.0, -4.9)
+
+[node name="Banner_2" parent="." instance=ExtResource("banner2")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 2.5, 1.0, -4.9)
+
+[node name="Barrel_1" parent="." instance=ExtResource("barrel")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 3.6, 0, 3.6)
+
+[node name="Barrel_2" parent="." instance=ExtResource("barrel")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 4.2, 0, 3.0)
+
+[node name="Crate_1" parent="." instance=ExtResource("crate")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -3.8, 0, 3.5)
+
+[node name="Chest" parent="." instance=ExtResource("chest")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -3.5, 0, 4.0)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("nav_mesh")
@@ -169,6 +215,14 @@ metadata/perch_height = 0.7
 metadata/facing = Vector3(1, 0, 0)
 
 [node name="PerchPoint_Barrel" type="Marker3D" parent="." groups=["cat_perches"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 0.8, 3.5)
-metadata/perch_height = 0.8
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.6, 0.9, 3.6)
+metadata/perch_height = 0.9
 metadata/facing = Vector3(-1, 0, 0)
+
+[node name="CinematicCamera" type="Camera3D" parent="." groups=["pitch_camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, -3.5)
+fov = 60.0
+near = 0.05
+far = 80.0
+script = ExtResource("cinematic_cam")
+room_key = "cellar"

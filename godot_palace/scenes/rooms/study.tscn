@@ -1,27 +1,38 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene load_steps=20 format=3]
 
+[ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
-
-[sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.45, 0.32, 0.2, 1)
-
-[sub_resource type="StandardMaterial3D" id="wall_mat"]
-albedo_color = Color(0.55, 0.42, 0.3, 1)
-
-[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
-albedo_color = Color(0.7, 0.65, 0.58, 1)
+[ext_resource type="Material" path="res://assets/materials/polyhaven/herringbone_parquet/herringbone_parquet.tres" id="floor_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/dark_wood/dark_wood.tres" id="wall_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/painted_plaster_wall/painted_plaster_wall.tres" id="ceiling_mat"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chandelier.gltf" id="chandelier"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Bookcase_2.gltf" id="bookcase"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/CandleStick_Triple.gltf" id="candlestick"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/BookStand.gltf" id="bookstand"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Book_Stack_1.gltf" id="bookstack"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/BookGroup_Medium_1.gltf" id="bookgroup1"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/BookGroup_Medium_2.gltf" id="bookgroup2"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Scroll_1.gltf" id="scroll"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Pot_1.gltf" id="inkpot"]
 
 [sub_resource type="Environment" id="env"]
 background_mode = 1
-background_color = Color(0.15, 0.12, 0.1, 1)
+background_color = Color(0.08, 0.06, 0.05, 1)
 ambient_light_source = 2
-ambient_light_color = Color(1.0, 0.92, 0.8, 1)
-ambient_light_energy = 0.35
-
-
-[sub_resource type="StandardMaterial3D" id="furniture_mat"]
-albedo_color = Color(0.5, 0.38, 0.28, 1)
+ambient_light_color = Color(0.6, 0.45, 0.3, 1)
+ambient_light_energy = 0.25
+tonemap_mode = 2
+tonemap_exposure = 1.1
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.1
+glow_bloom = 0.15
+fog_enabled = true
+fog_light_color = Color(0.5, 0.35, 0.2, 1)
+fog_light_energy = 0.3
+fog_density = 0.015
 
 [sub_resource type="NavigationMesh" id="nav_mesh"]
 agent_radius = 0.2
@@ -40,36 +51,36 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 use_collision = true
 size = Vector3(8, 0.2, 8)
-material = SubResource("floor_mat")
+material = ExtResource("floor_mat")
 
 [node name="Ceiling" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
 size = Vector3(8, 0.2, 8)
-material = SubResource("ceiling_mat")
+material = ExtResource("ceiling_mat")
 
 [node name="WallNorth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="WallSouth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="WallEast" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="WallWest" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="Cutout_Foyer" type="CSGBox3D" parent="WallWest"]
 operation = 2
@@ -78,15 +89,22 @@ size = Vector3(0.5, 2.7, 1.5)
 
 [node name="DeskLamp" type="OmniLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -2.5)
-light_color = Color(1.0, 0.9, 0.7, 1)
-light_energy = 1.0
-omni_range = 6.0
+light_color = Color(1.0, 0.82, 0.55, 1)
+light_energy = 1.6
+omni_range = 5.0
+omni_attenuation = 1.5
 
-[node name="OverheadLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.8, 0)
-light_color = Color(1.0, 0.95, 0.85, 1)
-light_energy = 0.6
-omni_range = 10.0
+[node name="ChandelierLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.2, 0)
+light_color = Color(1.0, 0.8, 0.5, 1)
+light_energy = 1.2
+omni_range = 7.0
+
+[node name="CandleGlow" type="OmniLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.7, 0.95, -3)
+light_color = Color(1.0, 0.7, 0.35, 1)
+light_energy = 1.0
+omni_range = 2.2
 
 [node name="WritingDesk" parent="." instance=ExtResource("surface")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.75, -3)
@@ -113,27 +131,60 @@ destination_room = "foyer"
 [node name="DeskCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.35, -3)
 size = Vector3(2.0, 0.7, 0.9)
-material = SubResource("furniture_mat")
+material = ExtResource("wall_mat")
 
 [node name="ShelfCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1.75, 0)
 size = Vector3(0.15, 0.06, 1.8)
-material = SubResource("furniture_mat")
+material = ExtResource("wall_mat")
 
 [node name="ShelfBracketL" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1.55, -0.6)
 size = Vector3(0.12, 0.4, 0.08)
-material = SubResource("furniture_mat")
+material = ExtResource("wall_mat")
 
 [node name="ShelfBracketR" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1.55, 0.6)
 size = Vector3(0.12, 0.4, 0.08)
-material = SubResource("furniture_mat")
+material = ExtResource("wall_mat")
 
 [node name="FrameCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 2.0, 0)
 size = Vector3(0.04, 0.8, 0.6)
-material = SubResource("furniture_mat")
+material = ExtResource("wall_mat")
+
+; --- Victorian props: chandelier overhead, freestanding bookcase, candlelit desk ---
+[node name="Chandelier" parent="." instance=ExtResource("chandelier")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 3.5, 0)
+
+[node name="Bookcase" parent="." instance=ExtResource("bookcase")]
+transform = Transform3D(1.4, 0, 0, 0, 1.5, 0, 0, 0, 1.4, -2.5, 0, -3.7)
+
+[node name="Bookcase2" parent="." instance=ExtResource("bookcase")]
+transform = Transform3D(1.4, 0, 0, 0, 1.5, 0, 0, 0, 1.4, 2.5, 0, -3.7)
+
+; --- Desk dressing ---
+[node name="Desk_CandleStick" parent="." instance=ExtResource("candlestick")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.7, 0.71, -3)
+
+[node name="Desk_BookStand" parent="." instance=ExtResource("bookstand")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.5, 0.71, -3)
+
+[node name="Desk_BookStack" parent="." instance=ExtResource("bookstack")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 0.1, 0.71, -3.2)
+
+[node name="Desk_Scroll" parent="." instance=ExtResource("scroll")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, -0.1, 0.71, -2.7)
+
+[node name="Desk_Inkpot" parent="." instance=ExtResource("inkpot")]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0.4, 0.71, -2.7)
+
+; --- Shelf books ---
+[node name="Shelf_Books1" parent="." instance=ExtResource("bookgroup1")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 3.5, 1.82, -0.4)
+
+[node name="Shelf_Books2" parent="." instance=ExtResource("bookgroup2")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 3.5, 1.82, 0.4)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("nav_mesh")
@@ -156,3 +207,11 @@ metadata/facing = Vector3(0, 0, 1)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.5, 1.8, 0)
 metadata/perch_height = 1.8
 metadata/facing = Vector3(-1, 0, 0)
+
+[node name="CinematicCamera" type="Camera3D" parent="." groups=["pitch_camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3, 1.6, 2)
+fov = 58.0
+near = 0.05
+far = 60.0
+script = ExtResource("cinematic_cam")
+room_key = "study"

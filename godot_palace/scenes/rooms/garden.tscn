@@ -1,30 +1,59 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=26 format=3]
 
+[ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
+[ext_resource type="Material" path="res://assets/materials/ambientcg/Travertine001/Travertine001_2K-PNG.tres" id="ground_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/marble_01/marble_01.tres" id="marble_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/painted_plaster_wall/painted_plaster_wall.tres" id="wall_mat"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/dark_wood/dark_wood.tres" id="furniture_mat"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/Pine_2.gltf" id="pine"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/CommonTree_3.gltf" id="tree"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/Bush_Common.gltf" id="bush"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/Bush_Common_Flowers.gltf" id="bush_flower"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/Fern_1.gltf" id="fern"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/stylized_nature/glTF/Flower_4_Group.gltf" id="flowers"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Vase_4.gltf" id="vase4"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Vase_2.gltf" id="vase2"]
+[ext_resource type="PackedScene" path="res://assets/models/plants/potted_plant_04/potted_plant_04_2k.gltf" id="potted"]
 
-[sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.35, 0.5, 0.3, 1)
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.45, 0.62, 0.82, 1)
+sky_horizon_color = Color(1.0, 0.8, 0.55, 1)
+sky_curve = 0.15
+ground_bottom_color = Color(0.35, 0.3, 0.25, 1)
+ground_horizon_color = Color(1.0, 0.8, 0.55, 1)
+sun_angle_max = 40.0
+sun_curve = 0.1
 
-[sub_resource type="StandardMaterial3D" id="wall_mat"]
-albedo_color = Color(0.75, 0.72, 0.65, 1)
-
-[sub_resource type="StandardMaterial3D" id="path_mat"]
-albedo_color = Color(0.7, 0.65, 0.55, 1)
-
-[sub_resource type="StandardMaterial3D" id="stone_mat"]
-albedo_color = Color(0.8, 0.78, 0.72, 1)
+[sub_resource type="Sky" id="sky_res"]
+sky_material = SubResource("sky_mat")
 
 [sub_resource type="Environment" id="env"]
-background_mode = 1
-background_color = Color(0.55, 0.7, 0.85, 1)
-ambient_light_source = 2
-ambient_light_color = Color(0.95, 0.98, 1.0, 1)
+background_mode = 2
+sky = SubResource("sky_res")
+ambient_light_source = 3
+ambient_light_color = Color(1.0, 0.95, 0.85, 1)
 ambient_light_energy = 0.7
+tonemap_mode = 2
+tonemap_exposure = 1.05
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.5
+glow_strength = 1.0
+glow_bloom = 0.12
+fog_enabled = true
+fog_light_color = Color(1.0, 0.88, 0.7, 1)
+fog_light_energy = 0.5
+fog_density = 0.006
+fog_aerial_perspective = 0.4
 
-
-[sub_resource type="StandardMaterial3D" id="furniture_mat"]
-albedo_color = Color(0.5, 0.38, 0.28, 1)
+[sub_resource type="StandardMaterial3D" id="water_mat"]
+transparency = 1
+albedo_color = Color(0.18, 0.55, 0.62, 0.72)
+metallic = 0.4
+metallic_specular = 0.8
+roughness = 0.04
 
 [sub_resource type="NavigationMesh" id="nav_mesh"]
 agent_radius = 0.2
@@ -43,19 +72,19 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 use_collision = true
 size = Vector3(14, 0.2, 14)
-material = SubResource("floor_mat")
+material = ExtResource("ground_mat")
 
 [node name="StonePath" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.02, 0)
 use_collision = true
 size = Vector3(2, 0.06, 12)
-material = SubResource("path_mat")
+material = ExtResource("marble_mat")
 
 [node name="WallNorth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -7.15)
 use_collision = true
 size = Vector3(14, 3, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="Cutout_Library" type="CSGBox3D" parent="WallNorth"]
 operation = 2
@@ -66,30 +95,32 @@ size = Vector3(1.5, 2.7, 0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 7.15)
 use_collision = true
 size = Vector3(14, 3, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="WallEast" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.15, 1.5, 0)
 use_collision = true
 size = Vector3(0.3, 3, 14)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="WallWest" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7.15, 1.5, 0)
 use_collision = true
 size = Vector3(0.3, 3, 14)
-material = SubResource("wall_mat")
+material = ExtResource("wall_mat")
 
 [node name="FountainBase" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
 size = Vector3(2, 0.6, 2)
-material = SubResource("stone_mat")
+material = ExtResource("marble_mat")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(0.85, -0.35, 0.39, 0, 0.74, 0.67, -0.53, -0.57, 0.63, 0, 8, 0)
-light_color = Color(1.0, 0.98, 0.92, 1)
-light_energy = 1.2
+light_color = Color(1.0, 0.9, 0.72, 1)
+light_energy = 1.5
 shadow_enabled = true
+shadow_blur = 1.5
+directional_shadow_max_distance = 40.0
 
 [node name="StoneBench" parent="." instance=ExtResource("surface")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.5, 3)
@@ -116,27 +147,80 @@ destination_room = "library"
 [node name="BenchSeatCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4, 0.3, 3)
 size = Vector3(2.0, 0.15, 0.5)
-material = SubResource("furniture_mat")
+material = ExtResource("furniture_mat")
 
 [node name="BenchLegL" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.7, 0.15, 3)
 size = Vector3(0.2, 0.3, 0.5)
-material = SubResource("furniture_mat")
+material = ExtResource("furniture_mat")
 
 [node name="BenchLegR" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.3, 0.15, 3)
 size = Vector3(0.2, 0.3, 0.5)
-material = SubResource("furniture_mat")
+material = ExtResource("furniture_mat")
 
 [node name="PlanterCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0.5, 0)
 size = Vector3(0.8, 1.0, 3.0)
-material = SubResource("furniture_mat")
+material = ExtResource("marble_mat")
 
 [node name="FountainWater" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.58, 0)
 size = Vector3(1.6, 0.04, 1.6)
-material = SubResource("furniture_mat")
+material = SubResource("water_mat")
+
+; --- Greenery: cypress at corners, olive trees mid-walls, bushes, ferns, flowers ---
+[node name="Cypress_NW" parent="." instance=ExtResource("pine")]
+transform = Transform3D(1.3, 0, 0, 0, 1.6, 0, 0, 0, 1.3, -5.6, 0, -5.6)
+
+[node name="Cypress_NE" parent="." instance=ExtResource("pine")]
+transform = Transform3D(1.3, 0, 0, 0, 1.7, 0, 0, 0, 1.3, 5.6, 0, -5.6)
+
+[node name="Cypress_SW" parent="." instance=ExtResource("pine")]
+transform = Transform3D(1.3, 0, 0, 0, 1.5, 0, 0, 0, 1.3, -5.6, 0, 5.6)
+
+[node name="Cypress_SE" parent="." instance=ExtResource("pine")]
+transform = Transform3D(1.3, 0, 0, 0, 1.65, 0, 0, 0, 1.3, 5.6, 0, 5.6)
+
+[node name="Olive_W" parent="." instance=ExtResource("tree")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -5.8, 0, 0)
+
+[node name="Olive_S" parent="." instance=ExtResource("tree")]
+transform = Transform3D(1.2, 0, 0, 0, 1.0, 0, 0, 0, 1.2, 3.0, 0, 5.8)
+
+[node name="Bush_1" parent="." instance=ExtResource("bush_flower")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -2.8, 0, -5.4)
+
+[node name="Bush_2" parent="." instance=ExtResource("bush")]
+transform = Transform3D(1.3, 0, 0, 0, 1.3, 0, 0, 0, 1.3, 2.8, 0, -5.4)
+
+[node name="Bush_3" parent="." instance=ExtResource("bush_flower")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -3.2, 0, 5.6)
+
+[node name="Fern_1a" parent="." instance=ExtResource("fern")]
+transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, -1.9, 0, 1.9)
+
+[node name="Fern_1b" parent="." instance=ExtResource("fern")]
+transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 1.9, 0, -1.9)
+
+[node name="Flowers_1" parent="." instance=ExtResource("flowers")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 1.9, 0, 1.9)
+
+[node name="Flowers_2" parent="." instance=ExtResource("flowers")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, -1.9, 0, -1.9)
+
+; --- Greco-Roman urns: fountain centerpiece + planter accents ---
+[node name="Urn_Fountain" parent="." instance=ExtResource("vase4")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0.6, 0)
+
+[node name="Urn_Planter_1" parent="." instance=ExtResource("vase2")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 5, 1.05, -1)
+
+[node name="Urn_Planter_2" parent="." instance=ExtResource("vase2")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 5, 1.05, 1)
+
+[node name="PottedPlant_Bench" parent="." instance=ExtResource("potted")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.6, 0, 3)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("nav_mesh")
@@ -162,3 +246,11 @@ metadata/facing = Vector3(1, 0, 0)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.8, 0.65, 0)
 metadata/perch_height = 0.65
 metadata/facing = Vector3(-1, 0, 0)
+
+[node name="CinematicCamera" type="Camera3D" parent="." groups=["pitch_camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.7, -6)
+fov = 60.0
+near = 0.05
+far = 120.0
+script = ExtResource("cinematic_cam")
+room_key = "garden"

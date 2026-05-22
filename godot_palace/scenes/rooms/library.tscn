@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3]
 
-[ext_resource type="Script" path="res://scripts/cinematic_library_camera.gd" id="cinematic_cam"]
+[ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
 [ext_resource type="Material" path="res://assets/materials/polyhaven/marble_01/marble_01.tres" id="floor_mat"]
@@ -13,7 +13,7 @@
 [ext_resource type="PackedScene" path="res://models/objects/candle.gltf" id="candle_glb"]
 [ext_resource type="PackedScene" path="res://models/objects/statue.gltf" id="statue_glb"]
 [ext_resource type="PackedScene" path="res://models/objects/jar.gltf" id="jar_glb"]
-[ext_resource type="PackedScene" path="res://assets/models/plants/potted_plant_04/potted_plant_04.gltf" id="plant_glb"]
+[ext_resource type="PackedScene" path="res://assets/models/plants/potted_plant_04/potted_plant_04_2k.gltf" id="plant_glb"]
 
 ; --- Golden-hour Mediterranean atmosphere via procedural sky + filmic tone + warm fog ---
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
@@ -267,3 +267,4 @@ fov = 55.0
 near = 0.05
 far = 80.0
 script = ExtResource("cinematic_cam")
+room_key = "library"

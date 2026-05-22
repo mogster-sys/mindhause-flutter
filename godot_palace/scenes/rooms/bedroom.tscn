@@ -1,30 +1,55 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=22 format=3]
 
+[ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
+[ext_resource type="Texture2D" path="res://textures/ryokan/tatami.png" id="tatami_tex"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/japanese_sycamore/japanese_sycamore.tres" id="wood_mat"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_SakuraTree.gltf" id="sakura"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_Light.gltf" id="lantern"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_Bell.gltf" id="bell"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_Bamboo.gltf" id="bamboo"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_Painting.gltf" id="painting"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Decoration/glTF/Decoration_Plant1.gltf" id="plant"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Environment/glTF/Wall_Shoji.gltf" id="shoji"]
+[ext_resource type="PackedScene" path="res://assets/models/quaternius/sushi/Environment/glTF/Environment_Table.gltf" id="lowtable"]
 
-[sub_resource type="StandardMaterial3D" id="floor_mat"]
-albedo_color = Color(0.6, 0.45, 0.35, 1)
+[sub_resource type="StandardMaterial3D" id="tatami_mat"]
+albedo_texture = ExtResource("tatami_tex")
+uv1_scale = Vector3(4, 4, 1)
+roughness = 0.92
 
-[sub_resource type="StandardMaterial3D" id="wall_mat"]
-albedo_color = Color(0.82, 0.75, 0.68, 1)
+[sub_resource type="StandardMaterial3D" id="futon_mat"]
+albedo_color = Color(0.93, 0.9, 0.84, 1)
+roughness = 0.85
 
-[sub_resource type="StandardMaterial3D" id="ceiling_mat"]
-albedo_color = Color(0.9, 0.87, 0.82, 1)
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.7, 0.78, 0.85, 1)
+sky_horizon_color = Color(0.95, 0.9, 0.85, 1)
+sky_curve = 0.2
+ground_bottom_color = Color(0.6, 0.55, 0.5, 1)
+ground_horizon_color = Color(0.9, 0.85, 0.8, 1)
 
-[sub_resource type="StandardMaterial3D" id="bed_mat"]
-albedo_color = Color(0.35, 0.28, 0.45, 1)
+[sub_resource type="Sky" id="sky_res"]
+sky_material = SubResource("sky_mat")
 
 [sub_resource type="Environment" id="env"]
-background_mode = 1
-background_color = Color(0.15, 0.12, 0.18, 1)
-ambient_light_source = 2
-ambient_light_color = Color(1.0, 0.93, 0.85, 1)
-ambient_light_energy = 0.35
-
-
-[sub_resource type="StandardMaterial3D" id="furniture_mat"]
-albedo_color = Color(0.5, 0.38, 0.28, 1)
+background_mode = 2
+sky = SubResource("sky_res")
+ambient_light_source = 3
+ambient_light_color = Color(1.0, 0.97, 0.92, 1)
+ambient_light_energy = 0.6
+tonemap_mode = 2
+tonemap_exposure = 1.05
+tonemap_white = 6.0
+glow_enabled = true
+glow_intensity = 0.3
+glow_strength = 1.0
+glow_bloom = 0.08
+fog_enabled = true
+fog_light_color = Color(0.95, 0.92, 0.88, 1)
+fog_light_energy = 0.4
+fog_density = 0.008
 
 [sub_resource type="NavigationMesh" id="nav_mesh"]
 agent_radius = 0.2
@@ -43,24 +68,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 2)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0)
 use_collision = true
 size = Vector3(8, 0.2, 8)
-material = SubResource("floor_mat")
+material = SubResource("tatami_mat")
 
 [node name="Ceiling" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.1, 0)
 size = Vector3(8, 0.2, 8)
-material = SubResource("ceiling_mat")
+material = ExtResource("wood_mat")
 
 [node name="WallNorth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, -4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wood_mat")
 
 [node name="WallSouth" type="CSGBox3D" parent="." groups=["themed_geometry"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 4.15)
 use_collision = true
 size = Vector3(8, 4, 0.3)
-material = SubResource("wall_mat")
+material = ExtResource("wood_mat")
 
 [node name="Cutout_Foyer" type="CSGBox3D" parent="WallSouth"]
 operation = 2
@@ -71,7 +96,7 @@ size = Vector3(1.5, 2.7, 0.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
-material = SubResource("wall_mat")
+material = ExtResource("wood_mat")
 
 [node name="Cutout_Gymnasium" type="CSGBox3D" parent="WallEast"]
 operation = 2
@@ -82,24 +107,31 @@ size = Vector3(0.5, 2.7, 1.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.15, 2, 0)
 use_collision = true
 size = Vector3(0.3, 4, 8)
-material = SubResource("wall_mat")
+material = ExtResource("wood_mat")
 
-[node name="BedCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.3, -2.5)
-size = Vector3(2, 0.6, 2.5)
-material = SubResource("bed_mat")
+[node name="FutonCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.12, -2.5)
+size = Vector3(2, 0.24, 2.5)
+material = SubResource("futon_mat")
 
-[node name="BedsideLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -2.5)
-light_color = Color(1.0, 0.88, 0.7, 1)
-light_energy = 0.6
+[node name="SoftFill" type="DirectionalLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(0.86, -0.3, 0.41, 0, 0.81, 0.59, -0.51, -0.5, 0.7, 0, 6, 0)
+light_color = Color(1.0, 0.96, 0.9, 1)
+light_energy = 1.0
+shadow_enabled = true
+shadow_blur = 2.0
+
+[node name="LanternGlowL" type="OmniLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.6, -3)
+light_color = Color(1.0, 0.78, 0.5, 1)
+light_energy = 1.2
 omni_range = 4.0
 
-[node name="DeskLight" type="OmniLight3D" parent="." groups=["themed_lights"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -2)
-light_color = Color(1.0, 0.92, 0.78, 1)
-light_energy = 0.8
-omni_range = 5.0
+[node name="LanternGlowR" type="OmniLight3D" parent="." groups=["themed_lights"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 1.6, 2)
+light_color = Color(1.0, 0.78, 0.5, 1)
+light_energy = 1.0
+omni_range = 3.5
 
 [node name="Nightstand" parent="." instance=ExtResource("surface")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.6, -2.5)
@@ -128,25 +160,36 @@ is_stairs = true
 transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 3.9, 0, 0)
 destination_room = "gymnasium"
 
-[node name="NightstandCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.25, -2.5)
-size = Vector3(0.5, 0.5, 0.4)
-material = SubResource("furniture_mat")
+; --- Ryokan dressing: low table, shoji screens, sakura, lanterns, bamboo, painting ---
+[node name="LowTable" parent="." instance=ExtResource("lowtable")]
+transform = Transform3D(0.9, 0, 0, 0, 0.7, 0, 0, 0, 0.9, 1, 0, 1)
 
-[node name="BedroomDeskCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.35, -2)
-size = Vector3(1.5, 0.7, 0.7)
-material = SubResource("furniture_mat")
+[node name="ShojiScreen_1" parent="." instance=ExtResource("shoji")]
+transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, -3.6, 0, 1.5)
 
-[node name="BedroomShelfCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15, 3.5)
-size = Vector3(0.15, 0.06, 2.0)
-material = SubResource("furniture_mat")
+[node name="ShojiScreen_2" parent="." instance=ExtResource("shoji")]
+transform = Transform3D(1.2, 0, 0, 0, 1.3, 0, 0, 0, 1.2, -3.6, 0, 0)
 
-[node name="DeskChairCSG" type="CSGBox3D" parent="." groups=["themed_geometry"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.25, -1.0)
-size = Vector3(0.5, 0.5, 0.5)
-material = SubResource("furniture_mat")
+[node name="SakuraTree" parent="." instance=ExtResource("sakura")]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, -3, 0, -3.2)
+
+[node name="Lantern_L" parent="." instance=ExtResource("lantern")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 3, 0, -3)
+
+[node name="Lantern_R" parent="." instance=ExtResource("lantern")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 3, 0, 2)
+
+[node name="Bell" parent="." instance=ExtResource("bell")]
+transform = Transform3D(0.7, 0, 0, 0, 0.7, 0, 0, 0, 0.7, 1, 0.71, 1)
+
+[node name="Bamboo" parent="." instance=ExtResource("bamboo")]
+transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 3.5, 0, -1)
+
+[node name="Painting" parent="." instance=ExtResource("painting")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.4, -3.95)
+
+[node name="Plant" parent="." instance=ExtResource("plant")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.5, 0, 3.5)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("nav_mesh")
@@ -160,12 +203,20 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.05, 0)
 [node name="CatSpot_ByBedSide" type="Marker3D" parent="." groups=["cat_spots"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.05, -1)
 
-[node name="PerchPoint_Bed" type="Marker3D" parent="." groups=["cat_perches"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.6, -2.5)
-metadata/perch_height = 0.6
+[node name="PerchPoint_Futon" type="Marker3D" parent="." groups=["cat_perches"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 0.24, -2.5)
+metadata/perch_height = 0.24
 metadata/facing = Vector3(1, 0, 0)
 
-[node name="PerchPoint_Desk" type="Marker3D" parent="." groups=["cat_perches"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.75, -2)
-metadata/perch_height = 0.75
-metadata/facing = Vector3(0, 0, 1)
+[node name="PerchPoint_Table" type="Marker3D" parent="." groups=["cat_perches"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.5, 1)
+metadata/perch_height = 0.5
+metadata/facing = Vector3(0, 0, -1)
+
+[node name="CinematicCamera" type="Camera3D" parent="." groups=["pitch_camera"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 3)
+fov = 58.0
+near = 0.05
+far = 60.0
+script = ExtResource("cinematic_cam")
+room_key = "bedroom"
