@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/rooms/room_manager.gd" id="1_rm"]
 [ext_resource type="PackedScene" path="res://scenes/player/player.tscn" id="2_player"]
 [ext_resource type="PackedScene" path="res://scenes/characters/cat.tscn" id="3_cat"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_hud"]
 [ext_resource type="Script" path="res://scripts/ai/monster_system.gd" id="5_monster"]
+[ext_resource type="PackedScene" path="res://scenes/effects/painterly_overlay.tscn" id="6_painterly"]
 
 [node name="House" type="Node3D"]
 script = ExtResource("1_rm")
@@ -21,6 +22,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 3)
 [node name="MonsterSystem" type="Node" parent="."]
 script = ExtResource("5_monster")
 
+[node name="PainterlyOverlay" parent="." instance=ExtResource("6_painterly")]
+
 [node name="HUDLayer" type="CanvasLayer" parent="."]
+layer = 10
 
 [node name="HUD" parent="HUDLayer" instance=ExtResource("4_hud")]

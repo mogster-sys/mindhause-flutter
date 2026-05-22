@@ -1,0 +1,278 @@
+Manus Prompt — Laser Guided Version
+
+This version is designed to:
+
+minimise wasted credits
+force deep curation
+prioritise beauty/cohesion
+retrieve ACTUAL usable production assets
+assemble near-complete environment ecosystems
+
+Paste directly into Manus AI
+
+You are acting as a senior environment art researcher for an indie 3D application called MindHause.
+
+IMPORTANT:
+This is NOT a broad asset discovery task.
+
+This is a HIGHLY FOCUSED production curation task.
+
+Your objective is to assemble TWO visually cohesive, emotionally immersive environment ecosystems that are close to production-ready.
+
+The goal is NOT quantity.
+The goal is BEAUTIFUL, COHESIVE, ATMOSPHERIC ENVIRONMENT FOUNDATIONS.
+
+MindHause is a dreamlike “memory palace” application where users inhabit idealised architectural spaces representing emotional and cognitive states.
+
+These spaces should feel:
+
+aspirational
+emotionally restorative
+intelligent
+calming
+beautiful
+magical
+warm
+contemplative
+
+VISUAL QUALITY TARGET:
+Closer to:
+
+Journey
+Firewatch
+The Witness
+ABZÛ
+Sky: Children of the Light
+Studio Ghibli interiors
+high-quality stylised realism
+
+NOT:
+
+crude low poly
+prototype aesthetics
+generic fantasy clutter
+cheap mobile-game visuals
+photorealistic scan-heavy realism
+
+PERFORMANCE TARGET:
+
+suitable for Godot Engine
+practical for desktop + modern mobile hardware
+stylised optimisation preferred
+beauty and atmosphere are more important than extreme optimisation
+THEME 1 — GRECO-ROMAN SANCTUARY
+
+EMOTIONAL TARGET:
+
+majestic calm
+philosophical sanctuary
+restorative luxury
+Mediterranean warmth
+dreamlike order
+idealised intellect
+
+VISUAL REFERENCES:
+
+Roman villas
+bathhouses
+philosophical academies
+marble atriums
+warm golden-hour sunlight
+fountains
+elegant courtyards
+
+SEARCH FOR:
+
+ARCHITECTURE:
+
+marble halls
+columns
+arches
+atriums
+stairs
+courtyards
+fountains
+modular Roman architecture
+elegant floor systems
+ceiling systems
+
+DECOR:
+
+statues
+busts
+amphorae
+pottery
+olive trees
+candles
+braziers
+rugs
+decorative benches
+bookshelves
+desks
+Mediterranean decorative pieces
+
+MATERIALS:
+
+white marble
+warm stone
+terracotta
+bronze
+mosaics
+elegant plaster
+Mediterranean surfaces
+
+ATMOSPHERE:
+
+warm volumetric lighting
+water shaders
+dust particles
+ambient fountain audio
+soft atmospheric soundscapes
+elegant Godot shaders
+THEME 2 — VICTORIAN SCHOLAR
+
+EMOTIONAL TARGET:
+
+intellectual refuge
+scholarly warmth
+introspection
+mystery without horror
+comforting sophistication
+candlelit focus
+
+VISUAL REFERENCES:
+
+Oxford libraries
+Victorian studies
+gentleman scholar interiors
+dark woods
+brass details
+fireplaces
+private libraries
+
+SEARCH FOR:
+
+ARCHITECTURE:
+
+wood-panelled rooms
+library interiors
+study architecture
+fireplaces
+staircases
+ceiling beams
+elegant Victorian hallways
+
+DECOR:
+
+bookshelves
+globes
+candles
+brass lamps
+clocks
+desks
+rugs
+framed paintings
+reading chairs
+parchment
+scientific instruments
+writing desks
+cabinets
+
+MATERIALS:
+
+mahogany
+walnut wood
+brass
+leather
+parchment
+aged paper
+velvet
+dark polished woods
+
+ATMOSPHERE:
+
+fireplace ambience
+warm dust-lit lighting
+atmospheric fog
+candlelight shaders
+subtle rain ambience
+elegant interior audio
+CRITICAL REQUIREMENTS
+
+PRIORITISE:
+
+cohesive environment packs
+emotionally immersive spaces
+premium stylised realism
+reusable modular systems
+assets that visually belong together
+“beautiful enough to live in”
+
+AVOID:
+
+endless browsing
+giant unrelated asset lists
+disconnected random props
+low-effort low-poly packs
+horror aesthetics
+military aesthetics
+voxel assets
+meme aesthetics
+
+PREFERRED SOURCES:
+
+Synty Studios
+Quaternius
+KitBash3D
+Poly Haven
+AmbientCG
+Sketchfab
+GodotShaders
+itch.io
+Kay Lousberg
+OpenGameArt
+OUTPUT FORMAT
+
+For EACH theme provide:
+
+BEST FOUNDATION ENVIRONMENT PACKS
+BEST DECORATIVE PACKS
+BEST MATERIAL/TEXTURE COLLECTIONS
+BEST ATMOSPHERIC/SHADER RESOURCES
+BEST AUDIO/AMBIENCE RESOURCES
+BEST “VERTICAL SLICE” COMBINATIONS
+
+For every entry include:
+
+asset name
+direct URL
+source
+free or paid
+approximate price
+licence
+why it is valuable
+style compatibility notes
+Godot suitability
+mobile suitability
+estimated visual quality (1–5)
+estimated cohesion with theme (1–5)
+
+IMPORTANT:
+
+Focus on QUALITY over quantity
+Stop after approximately 5–8 excellent candidates per category
+Prefer fewer but better options
+Think like an environment art director building a breathtaking dream-space
+
+FINAL GOAL:
+Assemble enough cohesive assets that ONE breathtaking Greco-Roman environment and ONE breathtaking Victorian Scholar environment could be built with minimal additional sourcing.
+
+DO NOT:
+
+generate new assets
+generate concept art
+create code
+redesign gameplay
+explain productivity systems
+
+Focus entirely on practical production-ready environment curation.

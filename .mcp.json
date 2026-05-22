@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "blender": {
+      "command": "/home/mogie/.local/bin/uvx",
+      "args": ["blender-mcp"]
+    }
+  }
+}

@@ -1,0 +1,238 @@
+You are assisting with premium-quality production asset acquisition for an indie 3D productivity experience called MindHause.
+
+PROJECT SUMMARY:
+
+MindHause is a psychologically restorative “memory palace” application where users walk through an idealised dream-home and interact with symbolic task objects.
+
+The experience is intended to feel:
+
+beautiful
+emotionally calming
+aspirational
+magical
+warm
+immersive
+elegant
+dreamlike
+
+This is NOT a generic low-poly indie game.
+
+The environment itself is part of the emotional experience and must feel like a fantasy of cognitive clarity, sanctuary, and self-organisation.
+
+VISUAL TARGET:
+
+Seek assets closer to:
+
+Journey
+Firewatch
+ABZÛ
+Sky: Children of the Light
+The Witness
+Studio Ghibli-inspired architecture
+stylised realism
+painterly environments
+elegant atmospheric worlds
+
+Avoid:
+
+crude game-jam low poly
+meme aesthetics
+voxel art
+excessively cartoony assets
+photorealistic modern urban assets
+horror aesthetics
+military aesthetics
+
+PERFORMANCE TARGET:
+
+must still be practical for Godot
+moderate polygon counts preferred
+stylised optimisation preferred over photorealism
+beauty and cohesion are more important than extreme optimisation
+
+CORE THEMATIC ENVIRONMENTS:
+
+The app contains multiple idealised architectural “mind spaces”.
+
+Search for assets appropriate for these themes:
+
+GRECO-ROMAN SANCTUARY
+marble halls
+columns
+atriums
+fountains
+warm Mediterranean lighting
+philosophical academy atmosphere
+MODERN LUXURY LOFT
+calm architectural minimalism
+tasteful contemporary interiors
+warm woods
+soft indirect lighting
+elegant furniture
+VICTORIAN SCHOLAR
+libraries
+studies
+dark woods
+brass
+bookshelves
+fireplaces
+scholarly atmosphere
+SCI-FI MINIMAL
+white architecture
+subtle neon
+clean futuristic interiors
+contemplative spaces
+soft lighting
+GOTHIC CATHEDRAL
+vast vertical interiors
+stained glass
+candlelight
+grand halls
+mystical atmosphere
+JAPANESE RYOKAN
+warm wood
+paper screens
+tranquil interiors
+zen atmosphere
+gardens
+lanterns
+COUNTRYSIDE COTTAGE
+cozy interiors
+warm fireplaces
+rustic charm
+plants
+comforting atmosphere
+
+MISSION:
+
+Create a curated production-ready asset database covering:
+
+A. ARCHITECTURE
+
+modular architectural kits
+hallways
+arches
+floors
+walls
+stairs
+doors
+windows
+pillars
+ceiling systems
+
+B. FURNITURE & DECOR
+
+bookshelves
+desks
+tables
+seating
+rugs
+candles
+plants
+decorative props
+fountains
+statues
+
+C. SYMBOLIC TASK OBJECTS
+
+books
+scrolls
+keys
+jars
+magical objects
+symbolic interactables
+
+D. MATERIALS & TEXTURES
+
+marble
+bronze
+wood
+parchment
+terracotta
+magical glow materials
+painterly surfaces
+
+E. AUDIO & ATMOSPHERE
+
+ambient loops
+environmental sounds
+magical ambience
+calming atmospheric audio
+subtle UI sounds
+
+F. SHADERS & EFFECTS
+
+Godot shaders
+dreamlike effects
+magical glow
+corruption effects
+atmospheric fog
+elegant particles
+
+PRIORITISE:
+
+cohesive art direction
+premium stylised assets
+reusable modular packs
+visually beautiful environments
+emotionally resonant spaces
+
+PREFER SOURCES:
+
+Synty
+KitBash3D
+Quaternius
+Poly Haven
+AmbientCG
+Sketchfab
+itch.io
+GodotShaders
+Kenney
+OpenGameArt
+
+IMPORTANT:
+
+include both free and premium options
+premium options are acceptable if unusually valuable
+prioritise visual cohesion and beauty over maximum cheapness
+avoid endlessly browsing
+stop after roughly 15–20 strong candidates per category
+
+OUTPUT FORMAT:
+
+Create:
+
+Master asset database
+Spreadsheet-compatible table
+Organised by theme and category
+
+For each entry include:
+
+asset name
+source
+direct URL
+licence
+free or paid
+approximate price
+visual style notes
+compatibility with MindHause themes
+estimated Godot/mobile suitability
+why it is valuable
+
+Then provide:
+
+BEST OVERALL PACKS
+HIGHEST BEAUTY-TO-COST RATIO
+BEST “FOUNDATION” ASSETS
+BEST PREMIUM PURCHASES
+FASTEST PATH TO A BEAUTIFUL VERTICAL SLICE
+
+DO NOT:
+
+generate concept art
+generate new 3D assets
+redesign gameplay
+create code
+explain productivity systems
+
+Focus entirely on practical production asset acquisition and curation.

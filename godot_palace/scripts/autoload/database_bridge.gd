@@ -54,6 +54,8 @@ func _init_memory_store() -> void:
 		"monster_sensitivity": "normal",
 		"cat_enabled": "true",
 		"focus_duration": "25",
+		"painterly_enabled": "true",
+		"painterly_strength": "0.85",
 	}
 	# Seed default rooms
 	_memory_rooms = [
