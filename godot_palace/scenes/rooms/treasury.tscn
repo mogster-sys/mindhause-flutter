@@ -1,40 +1,49 @@
-[gd_scene load_steps=17 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://scripts/cinematic_camera.gd" id="cinematic_cam"]
 [ext_resource type="PackedScene" path="res://scenes/elements/door.tscn" id="door"]
 [ext_resource type="PackedScene" path="res://scenes/elements/placement_surface.tscn" id="surface"]
 [ext_resource type="Material" path="res://assets/materials/polyhaven/marble_01/marble_01.tres" id="marble_mat"]
 [ext_resource type="Material" path="res://assets/materials/polyhaven/painted_plaster_wall/painted_plaster_wall.tres" id="wall_mat"]
-[ext_resource type="Material" path="res://assets/materials/polyhaven/dark_wood/dark_wood.tres" id="wood_mat"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chalice.gltf" id="chalice"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Coin_Pile.gltf" id="coins1"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Coin_Pile_2.gltf" id="coins2"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Chest_Wood.gltf" id="chest"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Vase_4.gltf" id="vase"]
-[ext_resource type="PackedScene" path="res://assets/models/quaternius/fantasy_props/Exports/glTF/Crate_Metal.gltf" id="crate"]
+[ext_resource type="Material" path="res://assets/materials/polyhaven/wood_floor/wood_floor.tres" id="wood_mat"]
+; --- Modern Loft finance pod: Kenney clean-modern props ---
+[ext_resource type="PackedScene" path="res://assets/models/kenney/furniture/Models/GLTF format/laptop.glb" id="laptop"]
+[ext_resource type="PackedScene" path="res://assets/models/kenney/furniture/Models/GLTF format/computerScreen.glb" id="screen"]
+[ext_resource type="PackedScene" path="res://assets/models/kenney/furniture/Models/GLTF format/lampSquareTable.glb" id="desklamp"]
+[ext_resource type="PackedScene" path="res://assets/models/kenney/furniture/Models/GLTF format/plantSmall1.glb" id="plant1"]
+[ext_resource type="PackedScene" path="res://assets/models/kenney/furniture/Models/GLTF format/sideTable.glb" id="sidetable"]
 
 [sub_resource type="StandardMaterial3D" id="gold_mat"]
-albedo_color = Color(0.85, 0.72, 0.35, 1)
-metallic = 0.8
-roughness = 0.2
+albedo_color = Color(0.6, 0.85, 0.95, 1)
+emission_enabled = true
+emission = Color(0.4, 0.85, 1.0, 1)
+emission_energy = 2.5
+metallic = 0.3
+roughness = 0.25
+
+[sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
+sky_top_color = Color(0.55, 0.65, 0.78, 1)
+sky_horizon_color = Color(0.82, 0.86, 0.92, 1)
+sky_curve = 0.2
+ground_bottom_color = Color(0.48, 0.5, 0.55, 1)
+ground_horizon_color = Color(0.78, 0.82, 0.88, 1)
+
+[sub_resource type="Sky" id="sky_res"]
+sky_material = SubResource("sky_mat")
 
 [sub_resource type="Environment" id="env"]
-background_mode = 1
-background_color = Color(0.09, 0.07, 0.05, 1)
-ambient_light_source = 2
-ambient_light_color = Color(1.0, 0.88, 0.62, 1)
-ambient_light_energy = 0.25
+background_mode = 2
+sky = SubResource("sky_res")
+ambient_light_source = 3
+ambient_light_color = Color(0.92, 0.95, 1.0, 1)
+ambient_light_energy = 0.7
 tonemap_mode = 2
-tonemap_exposure = 1.1
+tonemap_exposure = 1.0
 tonemap_white = 6.0
 glow_enabled = true
-glow_intensity = 0.5
-glow_strength = 1.1
-glow_bloom = 0.12
-fog_enabled = true
-fog_light_color = Color(0.8, 0.6, 0.35, 1)
-fog_light_energy = 0.3
-fog_density = 0.01
+glow_intensity = 0.35
+glow_strength = 1.0
+glow_bloom = 0.08
 
 [sub_resource type="NavigationMesh" id="nav_mesh"]
 agent_radius = 0.2
@@ -101,15 +110,15 @@ material = SubResource("gold_mat")
 
 [node name="Spotlight1" type="SpotLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 3.8, 0)
-light_color = Color(1.0, 0.92, 0.7, 1)
-light_energy = 3.0
+light_color = Color(0.96, 0.98, 1.0, 1)
+light_energy = 1.6
 spot_range = 6.0
 spot_angle = 35.0
 
 [node name="Spotlight2" type="SpotLight3D" parent="." groups=["themed_lights"]]
 transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 2, 3.8, -1.5)
-light_color = Color(1.0, 0.92, 0.7, 1)
-light_energy = 2.0
+light_color = Color(0.96, 0.98, 1.0, 1)
+light_energy = 1.2
 spot_range = 5.0
 spot_angle = 30.0
 
@@ -150,27 +159,24 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.95, 1.95, 0)
 size = Vector3(0.12, 0.06, 1.0)
 material = ExtResource("wood_mat")
 
-; --- Greco gold vault: chalice on pedestal, coin piles, chest, urn, strongbox ---
-[node name="Chalice_Showpiece" parent="." instance=ExtResource("chalice")]
-transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 0, 0.9, 0)
+; --- Modern Loft finance pod: laptop on pedestal, monitor on display, lamp + plant + side table ---
+[node name="Laptop_Showpiece" parent="." instance=ExtResource("laptop")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, 0, 0.9, 0)
 
-[node name="CoinPile_1" parent="." instance=ExtResource("coins1")]
-transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 1.6, 0, 1.5)
+[node name="Monitor" parent="." instance=ExtResource("screen")]
+transform = Transform3D(1.6, 0, 0, 0, 1.6, 0, 0, 0, 1.6, -2, 1.1, -1.5)
 
-[node name="CoinPile_2" parent="." instance=ExtResource("coins2")]
-transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 2.0, 0, 1.0)
+[node name="DeskLamp" parent="." instance=ExtResource("desklamp")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, 2.5, 0, -1.0)
 
-[node name="CoinPile_3" parent="." instance=ExtResource("coins1")]
-transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, -2.2, 1.45, -1.5)
+[node name="SideTable" parent="." instance=ExtResource("sidetable")]
+transform = Transform3D(1.5, 0, 0, 0, 1.5, 0, 0, 0, 1.5, 2.5, 0, -1.0)
 
-[node name="Chest" parent="." instance=ExtResource("chest")]
-transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 1.8, 0, -2.0)
+[node name="Plant_1" parent="." instance=ExtResource("plant1")]
+transform = Transform3D(1.4, 0, 0, 0, 1.4, 0, 0, 0, 1.4, -2.3, 0, 2.2)
 
-[node name="Urn" parent="." instance=ExtResource("vase")]
-transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, -2.2, 0, 2.0)
-
-[node name="Strongbox" parent="." instance=ExtResource("crate")]
-transform = Transform3D(1.0, 0, 0, 0, 1.0, 0, 0, 0, 1.0, 2.3, 0, -1.0)
+[node name="Plant_2" parent="." instance=ExtResource("plant1")]
+transform = Transform3D(1.2, 0, 0, 0, 1.2, 0, 0, 0, 1.2, 2.0, 0, 2.2)
 
 [node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
 navigation_mesh = SubResource("nav_mesh")
