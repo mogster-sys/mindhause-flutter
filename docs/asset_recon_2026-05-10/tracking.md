@@ -208,6 +208,8 @@ Phase 2 audit complete. Source paths relative to `godot_palace/assets/models/`. 
 
 ### SFX gaps (target: `audio/sfx/`)
 
+**Per-slot candidate shortlist**: `sonniss_audio_shortlist.md` (2026-05-27) — narrows 605 Sonniss WAVs to specific candidates per slot. Sonniss covers 7 of 13 directly; 4 need Freesound (cat_purr/hiss/chirp, chime_westminster); 2 easier on Freesound than isolating from Sonniss (chime_cathedral_bell, chime_cuckoo).
+
 | File | Status | Source plan | Used in scene(s) | Notes |
 |---|---|---|---|---|
 | `cat_meow.ogg` | 🟦 | Freesound | | |
