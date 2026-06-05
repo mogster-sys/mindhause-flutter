@@ -183,7 +183,7 @@ Phase 2 audit complete. Source paths relative to `godot_palace/assets/models/`. 
 | `pedestal.glb` | 🟧 SUB | `models/furniture/pedestal.gltf` (from BookStand) | | | Placed Phase 3. Substitute |
 | `stone_bench.glb` | 🟧 SUB | `models/furniture/stone_bench.gltf` (from Bench) | | | Placed Phase 3. Apply stone material override |
 | `stone_table.glb` | 🟧 SUB | `models/furniture/stone_table.gltf` (from Table_Large) | | | Placed Phase 3. Apply stone material override |
-| `column_ionic.glb` | 🟦 CUSTOM | **Custom Blender** (~30 min) | | | Genuine Greco gap. Stretch: Sushi `Environment_ToriiGate.gltf` (wrong style) |
+| `column_ionic.glb` | 🟧 BUILT | `models/furniture/column_ionic.glb` (procedural via Blender CLI 2026-06-05) | | | Built via the HKUDS/CLI-Anything Blender harness — plinth + lower torus + shaft + astragal + echinus + 2 volutes + abacus, 8 primitives, marble Principled BSDF. 188 KB GLB. Build script + scene JSON saved at `tools/blender_hero_pieces/`. Pending Godot visual verification in Foyer / Library scenes. |
 
 ### Timepiece models (target: `models/timepieces/`)
 
